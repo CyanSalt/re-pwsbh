@@ -1,0 +1,51 @@
+{
+  "name": "re-pwsbh",
+  "version": "1.0.0-0",
+  "description": "Cross-platform fork version of PowerfulWindSlickedBackHair",
+  "main": "dist/main/index.js",
+  "scripts": {
+    "postinstall": "electron-rebuild",
+    "dev": "node build/build.mjs && electron .",
+    "build": "node build/build.mjs && node build/pack.mjs -- --local",
+    "pack": "node build/build.mjs && node build/pack.mjs",
+    "release": "dotenv release-it --",
+    "lint:script": "eslint --ignore-path .gitignore --ext .js,.cjs,.mjs,.ts,.vue --cache --fix .",
+    "lint:style": "stylelint --ignore-path .gitignore --cache --fix ./**/*.{css,scss,vue}",
+    "lint": "npm run lint:script && npm run lint:style"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CyanSalt/re-pwsbh.git"
+  },
+  "keywords": [
+    "fun"
+  ],
+  "author": "CyanSalt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CyanSalt/re-pwsbh/issues"
+  },
+  "homepage": "https://github.com/CyanSalt/re-pwsbh#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {
+    "@cyansalt/eslint-config-preset": "^1.15.0",
+    "@cyansalt/stylelint-config-preset": "^1.4.1",
+    "@cyansalt/tsconfig": "^2.2.1",
+    "@electron/rebuild": "^3.3.0",
+    "@release-it/conventional-changelog": "^7.0.2",
+    "@types/node": "^18.18.7",
+    "@vitejs/plugin-vue": "^4.4.0",
+    "@vue-macros/reactivity-transform": "^0.3.23",
+    "electron": "^27.0.2",
+    "electron-packager": "^17.1.2",
+    "esbuild": "^0.19.5",
+    "png2icons": "^2.0.1",
+    "release-it": "^16.2.1",
+    "sass": "^1.69.5",
+    "typescript": "^5.2.2",
+    "vite": "^4.5.0",
+    "vue": "^3.3.7"
+  }
+}
