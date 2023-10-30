@@ -2,7 +2,12 @@ import * as path from 'node:path'
 import { app, BrowserWindow } from 'electron'
 
 function createWindow() {
-  const frame = new BrowserWindow()
+  const frame = new BrowserWindow({
+    webPreferences: {
+      preload: path.resolve(__dirname, '../preload/index.js'),
+      additionalArguments: ['--'],
+    },
+  })
   frame.loadFile(path.resolve(__dirname, '../renderer/index.html'))
 }
 
