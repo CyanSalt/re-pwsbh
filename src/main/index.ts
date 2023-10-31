@@ -48,6 +48,27 @@ function handleMessages() {
     }
     broadcast('time-update', time)
   })
+  ipcMain.on('get-position', event => {
+    const frame = BrowserWindow.fromWebContents(event.sender)
+    if (!frame) return
+    const [x, y] = frame.getPosition()
+    event.returnValue = { x, y }
+  })
+  ipcMain.on('move-to', (event, position: { x?: number, y?: number }) => {
+    const frame = BrowserWindow.fromWebContents(event.sender)
+    if (!frame) return
+    const [originalX, originalY] = frame.getPosition()
+    frame.setPosition(
+      Math.round(position.x ?? originalX),
+      Math.round(position.y ?? originalY),
+      true,
+    )
+  })
+  ipcMain.on('set-opacity', (event, value: number) => {
+    const frame = BrowserWindow.fromWebContents(event.sender)
+    if (!frame) return
+    frame.setOpacity(value)
+  })
 }
 
 async function initialize() {

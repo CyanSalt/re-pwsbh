@@ -29,15 +29,114 @@ const background = $computed(() => {
 
 const backgroundStyle = $computed(() => `url('${background}')`)
 
-let jumpSpace = $ref(1)
+let isJumping = $ref(true)
+let jumpingSpace = $ref(1)
+let jumpingHeight = $ref(1)
+
+function jump(magicNumber: number) {
+  if (!isJumping) return
+  magicNumber += 0.02 + 0.08 * (1 - jumpingSpace)
+  worldBridge.moveTo({
+    y: worldBridge.initialPosition.y + (jumpingHeight * 200 * magicNumber) * Math.log(magicNumber * 2.5),
+  })
+  if (magicNumber < 0.4) {
+    requestAnimationFrame(() => {
+      jump(magicNumber)
+    })
+  }
+}
 
 watchEffect(onInvalidate => {
   const timer = setInterval(() => {
     isUp = !isUp
-  }, 431 * jumpSpace)
+    jump(0)
+  }, 431 * jumpingSpace)
   onInvalidate(() => {
     clearInterval(timer)
   })
+})
+
+let movingRightStartedAt = $ref(0)
+
+function moveRight(timestamp: number) {
+  const distance = Math.floor((timestamp - movingRightStartedAt) * worldBridge.fps / 70)
+  worldBridge.moveTo({
+    x: worldBridge.initialPosition.x + distance,
+  })
+  if (distance - worldBridge.initialPosition.x < 950) {
+    requestAnimationFrame(moveRight)
+  }
+}
+
+watchEffect(() => {
+  if (movingRightStartedAt) {
+    isJumping = false
+    requestAnimationFrame(moveRight)
+  }
+})
+
+worldBridge.onPlay(frame => {
+  if (frame >= 1392) {
+    jumpingSpace = 0.4
+    worldBridge.setOpacity(1)
+    jumpingHeight = 0
+    if (!movingRightStartedAt) {
+      movingRightStartedAt = performance.now()
+    }
+    return
+  }
+  if (frame >= 1371) {
+    worldBridge.setOpacity(0)
+    return
+  }
+  if (frame >= 1228) {
+    state = YukiState.yellowNormal
+    worldBridge.setOpacity(1)
+    return
+  }
+  if (frame >= 619) {
+    worldBridge.setOpacity(0)
+    state = YukiState.yellowNormal
+    return
+  }
+  if (frame >= 542) {
+    state = YukiState.blueBlow
+    return
+  }
+  if (frame >= 467) {
+    state = YukiState.yellowBlow
+    return
+  }
+  if (frame >= 390) {
+    state = YukiState.blueBlow
+    return
+  }
+  if (frame >= 315) {
+    state = YukiState.yellowBlow
+    worldBridge.setOpacity(1)
+    return
+  }
+  if (frame >= 235) {
+    movingRightStartedAt = 0
+    worldBridge.setOpacity(0)
+    jumpingSpace = 1
+    jumpingHeight = 1
+    worldBridge.moveTo(worldBridge.initialPosition)
+    return
+  }
+  if (frame >= 172) {
+    jumpingSpace = 0.4
+    worldBridge.setOpacity(1)
+    jumpingHeight = 0
+    if (!movingRightStartedAt) {
+      movingRightStartedAt = performance.now()
+    }
+    return
+  }
+  if (frame >= 153) {
+    worldBridge.setOpacity(0)
+    return
+  }
 })
 </script>
 

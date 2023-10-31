@@ -75,13 +75,10 @@ const options = {
   out: 'release/',
   overwrite: true,
   asar: !process.env.DEBUG,
-  icon: 'resources/images/icon',
+  icon: 'resources/images/icon.png',
   ignore: [
     /^\/(?!dist|node_modules|resources|package\.json)/,
     /^\/resources\/.*\.(ico|icns)$/,
-  ],
-  extraResource: [
-    'bin',
   ],
   appVersion: pkg.version,
   appCopyright: [
@@ -150,11 +147,12 @@ async function pack() {
     const extname = path.extname(options.icon)
     if (extname === '.png') {
       const input = await fs.promises.readFile(options.icon)
-      const icon = path.basename(options.icon, extname)
+      const icon = path.join(path.dirname(options.icon), path.basename(options.icon, extname))
       await Promise.all([
         generateAppIcon(input, icon, 'ico'),
         generateAppIcon(input, icon, 'icns'),
       ])
+      options.icon = icon
     }
   }
   // Equivalent to { type: 'development' } for electron-osx-sign
