@@ -16,7 +16,7 @@ const worldBridge: WorldBridge = {
   },
   onPlay(fn) {
     ipcRenderer.on('time-update', (event, time: number) => {
-      fn(time * 1000 / fps)
+      fn(Math.round(time * 1000 / fps))
     })
   },
   moveTo(position) {

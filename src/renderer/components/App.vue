@@ -2,6 +2,7 @@
 import BackgroundFrame from './BackgroundFrame.vue'
 import JumpingYukiFrame from './JumpingYukiFrame.vue'
 import MainFrame from './MainFrame.vue'
+import WalkingDogFrame from './WalkingDogFrame.vue'
 
 function getCurrentComponent() {
   switch (worldBridge.args[0]) {
@@ -11,6 +12,8 @@ function getCurrentComponent() {
       return BackgroundFrame
     case 'jumping-yuki-frame':
       return JumpingYukiFrame
+    case 'walking-dog-frame':
+      return WalkingDogFrame
   }
 }
 
