@@ -5,7 +5,7 @@ const argIndex = process.argv.indexOf('--') + 1
 const args = argIndex ? process.argv.slice(argIndex) : []
 
 // The larger this value is, the slower the background will be played
-const FPS = 46.4 // TODO: wtf?
+const FPS = 46.46 // TODO: wtf?
 
 const worldBridge: WorldBridge = {
   args,

@@ -1,7 +1,7 @@
 {
   "name": "re-pwsbh",
   "version": "1.0.0-0",
-  "description": "Cross-platform fork version of PowerfulWindSlickedBackHair",
+  "description": "Cross-platform remaster of PowerfulWindSlickedBackHair",
   "main": "dist/main/index.js",
   "scripts": {
     "postinstall": "electron-rebuild",

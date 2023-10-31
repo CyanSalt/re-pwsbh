@@ -1,6 +1,6 @@
 import * as path from 'node:path'
 import type { BrowserWindowConstructorOptions } from 'electron'
-import { app, BrowserWindow, ipcMain, screen } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 
 function createWindow(args: string[], options?: Partial<BrowserWindowConstructorOptions>) {
   const frame = new BrowserWindow({
@@ -26,12 +26,24 @@ function broadcast(event: string, ...args: any[]) {
 
 function handleMessages() {
   let backgroundFrame: BrowserWindow | undefined
+  let jumpingYukiFrame: BrowserWindow | undefined
   ipcMain.on('sync-time', (event, time: number) => {
-    if (time > 0 && !backgroundFrame) {
-      const display = screen.getPrimaryDisplay()
+    const FPS = 46.46 // TODO: wtf?
+    const frame = time * 1000 / FPS
+    if (frame > 0 && !backgroundFrame) {
       backgroundFrame = createWindow(['background-frame'], {
-        width: display.workAreaSize.width / 2,
-        height: display.workAreaSize.height / 2,
+        title: '背景呐',
+        width: 1104,
+        height: 537,
+        center: true,
+      })
+    }
+    if (frame > 9 && !jumpingYukiFrame) {
+      jumpingYukiFrame = createWindow(['jumping-yuki-frame'], {
+        title: '小雪',
+        width: 240,
+        height: 578,
+        center: true,
       })
     }
     broadcast('time-update', time)
