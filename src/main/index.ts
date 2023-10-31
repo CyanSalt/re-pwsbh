@@ -1,26 +1,54 @@
 import * as path from 'node:path'
-import { app, BrowserWindow } from 'electron'
+import type { BrowserWindowConstructorOptions } from 'electron'
+import { app, BrowserWindow, ipcMain, screen } from 'electron'
 
-function createWindow() {
+function createWindow(args: string[], options?: Partial<BrowserWindowConstructorOptions>) {
   const frame = new BrowserWindow({
+    ...options,
     webPreferences: {
       preload: path.resolve(__dirname, '../preload/index.js'),
-      additionalArguments: ['--'],
+      additionalArguments: ['--', ...args],
     },
   })
   frame.loadFile(path.resolve(__dirname, '../renderer/index.html'))
+  return frame
+}
+
+function createMainFrame() {
+  return createWindow(['main-frame'])
+}
+
+function broadcast(event: string, ...args: any[]) {
+  BrowserWindow.getAllWindows().forEach(frame => {
+    frame.webContents.send(event, ...args)
+  })
+}
+
+function handleMessages() {
+  let backgroundFrame: BrowserWindow | undefined
+  ipcMain.on('sync-time', (event, time: number) => {
+    if (time > 0 && !backgroundFrame) {
+      const display = screen.getPrimaryDisplay()
+      backgroundFrame = createWindow(['background-frame'], {
+        width: display.workAreaSize.width / 2,
+        height: display.workAreaSize.height / 2,
+      })
+    }
+    broadcast('time-update', time)
+  })
 }
 
 async function initialize() {
   await app.whenReady()
-  createWindow()
+  createMainFrame()
 }
 
+handleMessages()
 initialize()
 
 app.on('activate', (event, hasVisibleWindows) => {
   if (!hasVisibleWindows && app.isReady()) {
-    createWindow()
+    createMainFrame()
   }
 })
 
