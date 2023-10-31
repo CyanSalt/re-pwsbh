@@ -76,9 +76,86 @@ watchEffect(() => {
 })
 
 worldBridge.onPlay(frame => {
+  if (frame >= 2817) {
+    worldBridge.toggleVisibility(false)
+    return
+  }
+  if (frame >= 2523) {
+    state = YukiState.yellowBlow
+    worldBridge.toggleVisibility(true)
+    return
+  }
+  if (frame >= 2369) {
+    movingRightStartedAt = 0
+    worldBridge.toggleVisibility(false)
+    worldBridge.moveTo(worldBridge.initialPosition)
+    jumpingSpace = 1
+    jumpingHeight = 1
+    return
+  }
+  if (frame >= 2304) {
+    jumpingSpace = 0.4
+    worldBridge.toggleVisibility(true)
+    jumpingHeight = 0
+    if (!movingRightStartedAt) {
+      movingRightStartedAt = performance.now()
+    }
+    return
+  }
+  if (frame >= 2284) {
+    worldBridge.toggleVisibility(false)
+    return
+  }
+  if (frame >= 2151) {
+    worldBridge.toggleVisibility(true)
+    return
+  }
+  if (frame >= 2062) {
+    movingRightStartedAt = 0
+    worldBridge.toggleVisibility(false)
+    jumpingSpace = 1
+    worldBridge.moveTo(worldBridge.initialPosition)
+    jumpingHeight = 1
+    return
+  }
+  if (frame >= 1998) {
+    jumpingSpace = 0.4
+    worldBridge.toggleVisibility(true)
+    jumpingHeight = 0
+    if (!movingRightStartedAt) {
+      movingRightStartedAt = performance.now()
+    }
+    return
+  }
+  if (frame >= 1979) {
+    worldBridge.toggleVisibility(false)
+    return
+  }
+  if (frame >= 1874) {
+    state = YukiState.yellowNormal
+    worldBridge.toggleVisibility(true)
+    return
+  }
+  if (frame >= 1811) {
+    worldBridge.toggleVisibility(false)
+    return
+  }
+  if (frame >= 1685) {
+    state = YukiState.yellowBlow
+    worldBridge.toggleVisibility(true)
+    return
+  }
+  if (frame >= 1454) {
+    movingRightStartedAt = 0
+    worldBridge.toggleVisibility(false)
+    jumpingSpace = 1
+    worldBridge.moveTo(worldBridge.initialPosition)
+    jumpingHeight = 1
+    return
+  }
   if (frame >= 1392) {
     jumpingSpace = 0.4
-    worldBridge.setOpacity(1)
+    worldBridge.toggleVisibility(true)
     jumpingHeight = 0
     if (!movingRightStartedAt) {
       movingRightStartedAt = performance.now()
@@ -86,16 +163,16 @@ worldBridge.onPlay(frame => {
     return
   }
   if (frame >= 1371) {
-    worldBridge.setOpacity(0)
+    worldBridge.toggleVisibility(false)
     return
   }
   if (frame >= 1228) {
     state = YukiState.yellowNormal
-    worldBridge.setOpacity(1)
+    worldBridge.toggleVisibility(true)
     return
   }
   if (frame >= 619) {
-    worldBridge.setOpacity(0)
+    worldBridge.toggleVisibility(false)
     state = YukiState.yellowNormal
     return
   }
@@ -113,20 +190,20 @@ worldBridge.onPlay(frame => {
   }
   if (frame >= 315) {
     state = YukiState.yellowBlow
-    worldBridge.setOpacity(1)
+    worldBridge.toggleVisibility(true)
     return
   }
   if (frame >= 235) {
     movingRightStartedAt = 0
-    worldBridge.setOpacity(0)
+    worldBridge.toggleVisibility(false)
     jumpingSpace = 1
-    jumpingHeight = 1
     worldBridge.moveTo(worldBridge.initialPosition)
+    jumpingHeight = 1
     return
   }
   if (frame >= 172) {
     jumpingSpace = 0.4
-    worldBridge.setOpacity(1)
+    worldBridge.toggleVisibility(true)
     jumpingHeight = 0
     if (!movingRightStartedAt) {
       movingRightStartedAt = performance.now()
@@ -134,7 +211,7 @@ worldBridge.onPlay(frame => {
     return
   }
   if (frame >= 153) {
-    worldBridge.setOpacity(0)
+    worldBridge.toggleVisibility(false)
     return
   }
 })

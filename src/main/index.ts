@@ -8,6 +8,7 @@ function createWindow(args: string[], options?: Partial<BrowserWindowConstructor
     webPreferences: {
       preload: path.resolve(__dirname, '../preload/index.js'),
       additionalArguments: ['--', ...args],
+      backgroundThrottling: false,
     },
   })
   frame.loadFile(path.resolve(__dirname, '../renderer/index.html'))
@@ -25,10 +26,14 @@ function broadcast(event: string, ...args: any[]) {
 }
 
 function handleMessages() {
+  // The larger this value is, the slower the background will be played
+  const FPS = 46.5 // TODO: wtf?
   let backgroundFrame: BrowserWindow | undefined
   let jumpingYukiFrame: BrowserWindow | undefined
+  ipcMain.on('get-fps', event => {
+    event.returnValue = FPS
+  })
   ipcMain.on('sync-time', (event, time: number) => {
-    const FPS = 46.46 // TODO: wtf?
     const frame = time * 1000 / FPS
     if (frame > 0 && !backgroundFrame) {
       backgroundFrame = createWindow(['background-frame'], {
@@ -64,10 +69,14 @@ function handleMessages() {
       true,
     )
   })
-  ipcMain.on('set-opacity', (event, value: number) => {
+  ipcMain.on('toggle-visibility', (event, value: boolean) => {
     const frame = BrowserWindow.fromWebContents(event.sender)
     if (!frame) return
-    frame.setOpacity(value)
+    if (value) {
+      frame.show()
+    } else {
+      frame.hide()
+    }
   })
 }
 
