@@ -10,7 +10,7 @@ let turn = $ref(0)
 const backgroundStyle = $computed(() => `url('${background}')`)
 const transform = $computed(() => `rotate(${turn}turn)`)
 
-let isRolling = $ref(false)
+let isRolling = false
 
 function roll() {
   if (!isRolling) return
@@ -30,16 +30,13 @@ watchEffect(onInvalidate => {
   })
 })
 
-let startFrame = $ref(0)
+let startFrame = 172 // Also see src/main/window.ts
 let lastPosition = $ref(1000)
 const sustainLength = 58
 
 const willShowMessage = $computed(() => lastPosition > 1000)
 
 worldBridge.onPlay(frame => {
-  if (!startFrame) {
-    startFrame = frame
-  }
   if (frame < startFrame + sustainLength - 30) {
     const magicNumber = frame % 6
     background = magicNumber < 3 ? dogWalk1 : dogWalk2
@@ -56,7 +53,11 @@ worldBridge.onPlay(frame => {
 </script>
 
 <template>
-  <div class="rolling-dog-frame"></div>
+  <div class="rolling-dog-frame">
+    <img :src="dogWalk1" class="offscreen-image">
+    <img :src="dogWalk2" class="offscreen-image">
+    <img :src="rollingDog" class="offscreen-image">
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -73,5 +74,9 @@ worldBridge.onPlay(frame => {
     background-repeat: no-repeat;
     transform: v-bind('transform');
   }
+}
+.offscreen-image {
+  position: absolute;
+  opacity: 0;
 }
 </style>

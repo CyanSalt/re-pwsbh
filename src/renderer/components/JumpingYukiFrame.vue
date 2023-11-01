@@ -29,9 +29,9 @@ const background = $computed(() => {
 
 const backgroundStyle = $computed(() => `url('${background}')`)
 
-let isJumping = $ref(true)
+let isJumping = true
 let jumpingSpace = $ref(1)
-let jumpingHeight = $ref(1)
+let jumpingHeight = 1
 
 function jump(magicNumber: number) {
   if (!isJumping) return
@@ -57,9 +57,10 @@ watchEffect(onInvalidate => {
 })
 
 let movingRightStartedAt = $ref(0)
+let movingRightFps = 0
 
 function moveRight(timestamp: number) {
-  const distance = Math.floor((timestamp - movingRightStartedAt) * worldBridge.fps / 70)
+  const distance = Math.floor((timestamp - movingRightStartedAt) * movingRightFps / 70)
   worldBridge.moveTo({
     x: worldBridge.initialPosition.x + distance,
   })
@@ -171,7 +172,7 @@ worldBridge.keyframes.once('keyframe-2817', () => {
   worldBridge.toggleVisibility(false)
 })
 
-worldBridge.onPlay(frame => {
+worldBridge.onPlay((frame, fps) => {
   if (frame >= 2817) {
     worldBridge.keyframes.emit('keyframe-2817')
     return
@@ -189,6 +190,7 @@ worldBridge.onPlay(frame => {
   }
   if (frame >= 2304) {
     worldBridge.keyframes.emit('keyframe-2304')
+    movingRightFps = fps
     jumpingSpace = 0.4
     jumpingHeight = 0
     return
@@ -209,6 +211,7 @@ worldBridge.onPlay(frame => {
   }
   if (frame >= 1998) {
     worldBridge.keyframes.emit('keyframe-1998')
+    movingRightFps = fps
     jumpingSpace = 0.4
     jumpingHeight = 0
     return
@@ -239,6 +242,7 @@ worldBridge.onPlay(frame => {
   }
   if (frame >= 1392) {
     worldBridge.keyframes.emit('keyframe-1392')
+    movingRightFps = fps
     jumpingSpace = 0.4
     jumpingHeight = 0
     return
@@ -282,6 +286,7 @@ worldBridge.onPlay(frame => {
   }
   if (frame >= 172) {
     worldBridge.keyframes.emit('keyframe-172')
+    movingRightFps = fps
     jumpingSpace = 0.4
     jumpingHeight = 0
     return
@@ -294,7 +299,14 @@ worldBridge.onPlay(frame => {
 </script>
 
 <template>
-  <div class="jumping-yuki-frame"></div>
+  <div class="jumping-yuki-frame">
+    <img :src="jumpDownBlowBlue" class="offscreen-image">
+    <img :src="jumpDownBlow" class="offscreen-image">
+    <img :src="jumpDown" class="offscreen-image">
+    <img :src="jumpUpBlowBlue" class="offscreen-image">
+    <img :src="jumpUpBlow" class="offscreen-image">
+    <img :src="jumpUp" class="offscreen-image">
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -303,5 +315,9 @@ worldBridge.onPlay(frame => {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+.offscreen-image {
+  position: absolute;
+  opacity: 0;
 }
 </style>

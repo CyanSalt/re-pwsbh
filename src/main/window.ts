@@ -2,6 +2,7 @@ import { EventEmitter } from 'node:events'
 import * as path from 'node:path'
 import type { BrowserWindowConstructorOptions } from 'electron'
 import { BrowserWindow, ipcMain, screen } from 'electron'
+import raf from 'raf'
 
 // The larger this value is, the slower the background will be played
 const FPS = 46.5 // TODO: wtf?
@@ -121,6 +122,13 @@ function createRollingDogFrame(mainFrame: BrowserWindow) {
     y: screenSize.height - windowSize.height - 30,
     show: false,
     focusable: false,
+  })
+}
+
+function loop(fn: Parameters<typeof raf>[0]) {
+  raf(timestamp => {
+    fn(timestamp)
+    loop(fn)
   })
 }
 
@@ -252,8 +260,14 @@ export function initializeWindows() {
     rollingDogFrame.show()
   })
 
+  let startedAt = 0
+
   ipcMain.on('sync-time', (event, time: number) => {
-    const frame = time * 1000 / FPS
+    startedAt = performance.now() - time * 1000
+  })
+
+  loop(timestamp => {
+    const frame = (timestamp - startedAt) / FPS
     // Background
     if (frame >= 0) {
       emitter.emit('background:keyframe-0')
@@ -296,6 +310,6 @@ export function initializeWindows() {
     if (frame >= 172) {
       emitter.emit('rolling-dog:keyframe-172')
     }
-    broadcast('time-update', time)
+    broadcast('play', frame, FPS)
   })
 }

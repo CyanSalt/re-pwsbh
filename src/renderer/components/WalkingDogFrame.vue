@@ -13,7 +13,10 @@ worldBridge.onPlay(frame => {
 </script>
 
 <template>
-  <div class="walking-dog-frame"></div>
+  <div class="walking-dog-frame">
+    <img :src="dogWalk1" class="offscreen-image">
+    <img :src="dogWalk2" class="offscreen-image">
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -22,5 +25,9 @@ worldBridge.onPlay(frame => {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+.offscreen-image {
+  position: absolute;
+  opacity: 0;
 }
 </style>

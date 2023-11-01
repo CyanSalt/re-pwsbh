@@ -7,11 +7,8 @@ const additionalArgs = argIndex > 0 && argIndex < process.argv.length
   ? JSON.parse(process.argv[argIndex]) as {
     name: string,
     initialPosition: { x: number, y: number },
-    fps: number,
   }
   : undefined
-
-const FPS = additionalArgs?.fps ?? 30
 
 let whenReady = new Promise<void>(resolve => {
   ipcRenderer.once('show', () => {
@@ -32,7 +29,6 @@ const keyframes = {
 const worldBridge: WorldBridge = {
   name: additionalArgs?.name ?? '',
   initialPosition: additionalArgs?.initialPosition ?? { x: 0, y: 0 },
-  fps: FPS,
   keyframes,
   syncTime(time) {
     ipcRenderer.send('sync-time', time)
@@ -41,8 +37,8 @@ const worldBridge: WorldBridge = {
     whenReady.then(fn)
   },
   onPlay(fn) {
-    ipcRenderer.on('time-update', (event, time: number) => {
-      fn(Math.round(time * 1000 / FPS))
+    ipcRenderer.on('play', (event, frame: number, fps: number) => {
+      fn(frame, fps)
     })
   },
   moveTo(position) {
