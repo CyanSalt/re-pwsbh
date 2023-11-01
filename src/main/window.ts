@@ -70,7 +70,10 @@ function showWalkingDogFrame(
 }
 
 function createMainFrame() {
-  return createWindow('main-frame')
+  return createWindow('main-frame', {
+    width: 312,
+    height: 144,
+  })
 }
 
 function createBackgroundFrame(mainFrame: BrowserWindow) {
@@ -368,6 +371,14 @@ export function initializeWindows() {
     rollingDogFrame.show()
   })
 
+  emitter.once('rolling-dog:keyframe-811', () => {
+    rollingDogFrame.show()
+  })
+
+  emitter.once('rolling-dog:keyframe-990', () => {
+    rollingDogFrame.show()
+  })
+
   emitter.once('clapping-yuki-peeking-pigeon:keyframe-69', () => {
     clappingYukiFrame.show()
     peekingPigeonFrame.show()
@@ -447,7 +458,11 @@ export function initializeWindows() {
       emitter.emit('walking-dog:keyframe-14')
     }
     // Rolling dog
-    if (frame >= 172) {
+    if (frame >= 990) {
+      emitter.emit('rolling-dog:keyframe-990')
+    } else if (frame >= 811) {
+      emitter.emit('rolling-dog:keyframe-811')
+    } else if (frame >= 172) {
       emitter.emit('rolling-dog:keyframe-172')
     }
     // Clapping Yuki and Peeking pigeon

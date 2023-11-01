@@ -13,11 +13,11 @@ const transform = $computed(() => `rotate(${turn}turn)`)
 let isRolling = false
 
 function roll() {
-  if (!isRolling) return
-  background = rollingDog
-  turn += 0.25
-  while (turn >= 1) {
-    turn -= 1
+  if (isRolling) {
+    background = rollingDog
+    turn = (turn + 0.25) % 1
+  } else {
+    turn = 0
   }
 }
 
@@ -31,19 +31,34 @@ watchEffect(onInvalidate => {
 })
 
 let startFrame = 172
-let lastPosition = $ref(1000)
+let lastPosition = 1000
 const sustainLength = 58
 
-const willShowMessage = $computed(() => lastPosition > 1000)
+// const willShowMessage = $computed(() => lastPosition > 1000)
 
 worldBridge.keyframes.once('keyframe-from-172', () => {
   worldBridge.toggleVisibility(false)
 })
 
+worldBridge.keyframes.once('keyframe-from-811', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-from-990', () => {
+  worldBridge.toggleVisibility(false)
+})
+
 worldBridge.onPlay(frame => {
   // Also see src/main/window.ts
-  if (frame >= 172) {
+  if (frame >= 990) {
+    startFrame = 990
+    lastPosition = 1450
+  } else if (frame >= 811) {
+    startFrame = 811
+    lastPosition = 1450
+  } else if (frame >= 172) {
     startFrame = 172
+    lastPosition = 1000
   }
 
   if (frame < startFrame + sustainLength - 30) {
@@ -58,8 +73,13 @@ worldBridge.onPlay(frame => {
       x: worldBridge.initialPosition.x + Math.round(magicNumber * lastPosition),
     })
   } else {
+    isRolling = false
     if (startFrame === 172) {
       worldBridge.keyframes.emit('keyframe-from-172')
+    } else if (startFrame === 811) {
+      worldBridge.keyframes.emit('keyframe-from-811')
+    } else if (startFrame === 990) {
+      worldBridge.keyframes.emit('keyframe-from-990')
     }
   }
 })
