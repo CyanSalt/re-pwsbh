@@ -29,14 +29,35 @@ const background = $computed(() => {
 
 const backgroundStyle = $computed(() => `url('${background}')`)
 
-let isJumping = true
+let movingRightStartedAt = $ref(0)
+let movingRightInterval = 0
+
+function moveRight(timestamp: number) {
+  const distance = Math.floor((timestamp - movingRightStartedAt) / movingRightInterval / 70 * 1000)
+  worldBridge.moveTo({
+    x: worldBridge.initialPosition.x + distance,
+  })
+  if (distance - worldBridge.initialPosition.x < 950) {
+    requestAnimationFrame(moveRight)
+  } else {
+    movingRightStartedAt = 0
+  }
+}
+
+watchEffect(() => {
+  if (movingRightStartedAt) {
+    requestAnimationFrame(moveRight)
+  }
+})
+
 let jumpingSpace = $ref(1)
 let jumpingHeight = 1
 
 function jump(magicNumber: number) {
-  if (!isJumping) return
+  if (movingRightStartedAt) return
   magicNumber += 0.02 + 0.08 * (1 - jumpingSpace)
   worldBridge.moveTo({
+    x: worldBridge.initialPosition.x,
     y: worldBridge.initialPosition.y + (jumpingHeight * 200 * magicNumber) * Math.log(magicNumber * 2.5),
   })
   if (magicNumber < 0.4) {
@@ -56,26 +77,6 @@ watchEffect(onInvalidate => {
   })
 })
 
-let movingRightStartedAt = $ref(0)
-let movingRightFps = 0
-
-function moveRight(timestamp: number) {
-  const distance = Math.floor((timestamp - movingRightStartedAt) * movingRightFps / 70)
-  worldBridge.moveTo({
-    x: worldBridge.initialPosition.x + distance,
-  })
-  if (distance - worldBridge.initialPosition.x < 950) {
-    requestAnimationFrame(moveRight)
-  }
-}
-
-watchEffect(() => {
-  if (movingRightStartedAt) {
-    isJumping = false
-    requestAnimationFrame(moveRight)
-  }
-})
-
 worldBridge.keyframes.once('keyframe-153', () => {
   worldBridge.toggleVisibility(false)
 })
@@ -86,7 +87,6 @@ worldBridge.keyframes.once('keyframe-172', () => {
 })
 
 worldBridge.keyframes.once('keyframe-235', () => {
-  movingRightStartedAt = 0
   worldBridge.toggleVisibility(false)
   worldBridge.moveTo(worldBridge.initialPosition)
 })
@@ -113,7 +113,6 @@ worldBridge.keyframes.once('keyframe-1392', () => {
 })
 
 worldBridge.keyframes.once('keyframe-1454', () => {
-  movingRightStartedAt = 0
   worldBridge.toggleVisibility(false)
   worldBridge.moveTo(worldBridge.initialPosition)
 })
@@ -140,7 +139,6 @@ worldBridge.keyframes.once('keyframe-1998', () => {
 })
 
 worldBridge.keyframes.once('keyframe-2062', () => {
-  movingRightStartedAt = 0
   worldBridge.toggleVisibility(false)
   worldBridge.moveTo(worldBridge.initialPosition)
 })
@@ -159,7 +157,6 @@ worldBridge.keyframes.once('keyframe-2304', () => {
 })
 
 worldBridge.keyframes.once('keyframe-2369', () => {
-  movingRightStartedAt = 0
   worldBridge.toggleVisibility(false)
   worldBridge.moveTo(worldBridge.initialPosition)
 })
@@ -172,7 +169,7 @@ worldBridge.keyframes.once('keyframe-2817', () => {
   worldBridge.toggleVisibility(false)
 })
 
-worldBridge.onPlay((frame, fps) => {
+worldBridge.onPlay((frame, interval) => {
   if (frame >= 2817) {
     worldBridge.keyframes.emit('keyframe-2817')
     return
@@ -190,7 +187,7 @@ worldBridge.onPlay((frame, fps) => {
   }
   if (frame >= 2304) {
     worldBridge.keyframes.emit('keyframe-2304')
-    movingRightFps = fps
+    movingRightInterval = interval
     jumpingSpace = 0.4
     jumpingHeight = 0
     return
@@ -211,7 +208,7 @@ worldBridge.onPlay((frame, fps) => {
   }
   if (frame >= 1998) {
     worldBridge.keyframes.emit('keyframe-1998')
-    movingRightFps = fps
+    movingRightInterval = interval
     jumpingSpace = 0.4
     jumpingHeight = 0
     return
@@ -242,7 +239,7 @@ worldBridge.onPlay((frame, fps) => {
   }
   if (frame >= 1392) {
     worldBridge.keyframes.emit('keyframe-1392')
-    movingRightFps = fps
+    movingRightInterval = interval
     jumpingSpace = 0.4
     jumpingHeight = 0
     return
@@ -286,7 +283,7 @@ worldBridge.onPlay((frame, fps) => {
   }
   if (frame >= 172) {
     worldBridge.keyframes.emit('keyframe-172')
-    movingRightFps = fps
+    movingRightInterval = interval
     jumpingSpace = 0.4
     jumpingHeight = 0
     return

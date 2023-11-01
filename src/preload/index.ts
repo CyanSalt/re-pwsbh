@@ -39,8 +39,8 @@ const worldBridge: WorldBridge = {
     whenReady.then(fn)
   },
   onPlay(fn) {
-    ipcRenderer.on('play', (event, frame: number, fps: number) => {
-      fn(frame, fps)
+    ipcRenderer.on('play', (event, frame: number, interval: number) => {
+      fn(frame, interval)
     })
   },
   moveTo(position) {

@@ -5,7 +5,7 @@ import { BrowserWindow, ipcMain, screen } from 'electron'
 import raf from 'raf'
 
 // The larger this value is, the slower the background will be played
-const FPS = 46.5 // TODO: wtf?
+const frameInterval = 46.5 // TODO: wtf?
 
 function broadcast(event: string, ...args: any[]) {
   BrowserWindow.getAllWindows().forEach(frame => {
@@ -38,7 +38,6 @@ function createWindow(name: string, options?: Partial<BrowserWindowConstructorOp
       preload: path.resolve(__dirname, '../preload/index.js'),
       additionalArguments: ['--', JSON.stringify({
         name,
-        fps: FPS,
         initialPosition: { x: x ?? 0, y: y ?? 0 },
         initialSize: { width, height },
       })],
@@ -166,10 +165,27 @@ function createStaticYukiFrame(mainFrame: BrowserWindow, offsetX: number) {
   }
   return createWindow('static-yuki-frame', {
     parent: mainFrame,
-    title: '小雪',
+    title: 'Error',
     ...windowSize,
     x: (screenSize.width - windowSize.width) / 2 + offsetX,
     y: (screenSize.height - windowSize.height) / 2,
+    show: false,
+    focusable: false,
+  })
+}
+
+function createBlackBirdFrame(mainFrame: BrowserWindow) {
+  const screenSize = screen.getDisplayMatching(mainFrame.getBounds()).workAreaSize
+  const windowSize = {
+    width: 262,
+    height: 204,
+  }
+  return createWindow('black-bird-frame', {
+    parent: mainFrame,
+    title: '',
+    ...windowSize,
+    x: (screenSize.width - windowSize.width) / 2 - 500,
+    y: screenSize.height / 2 - windowSize.height + 400,
     show: false,
     focusable: false,
   })
@@ -198,6 +214,7 @@ export function initializeWindows() {
   const staticYukiLeftFrame = createStaticYukiFrame(mainFrame, -400)
   const staticYukiCenterFrame = createStaticYukiFrame(mainFrame, 0)
   const staticYukiRightFrame = createStaticYukiFrame(mainFrame, 400)
+  const blackBirdFrame = createBlackBirdFrame(mainFrame)
 
   const whenReady = Promise.all(
     BrowserWindow.getAllWindows().map(frame => new Promise<void>(resolve => {
@@ -337,6 +354,10 @@ export function initializeWindows() {
     staticYukiRightFrame.show()
   })
 
+  emitter.once('black-bird-white-bird:keyframe-315', () => {
+    blackBirdFrame.show()
+  })
+
   let startedAt = 0
 
   ipcMain.on('sync-time', (event, time: number) => {
@@ -344,7 +365,7 @@ export function initializeWindows() {
   })
 
   loop(timestamp => {
-    const frame = (timestamp - startedAt) / FPS
+    const frame = (timestamp - startedAt) / frameInterval
     // Background
     if (frame >= 0) {
       emitter.emit('background:keyframe-0')
@@ -401,6 +422,10 @@ export function initializeWindows() {
     } else if (frame >= 234) {
       emitter.emit('static-yuki:keyframe-234')
     }
-    broadcast('play', frame, FPS)
+    // Black bird and white bird
+    if (frame >= 315) {
+      emitter.emit('black-bird-white-bird:keyframe-315')
+    }
+    broadcast('play', frame, frameInterval)
   })
 }

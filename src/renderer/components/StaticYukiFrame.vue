@@ -14,7 +14,7 @@ worldBridge.keyframes.once('keyframe-to-269', () => {
 
 worldBridge.onPlay(frame => {
   if (frame <= endFrame) {
-    background = (frame / 8) % 2 === 1 ? jumpUp : jumpDown
+    background = Math.floor(frame / 8) % 2 === 1 ? jumpUp : jumpDown
   } else {
     worldBridge.keyframes.emit('keyframe-to-269')
   }

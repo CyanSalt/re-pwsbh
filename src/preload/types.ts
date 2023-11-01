@@ -7,7 +7,7 @@ export interface WorldBridge {
   keyframes: Pick<EventEmitter, 'once' | 'emit'>,
   syncTime(time: number): void,
   onReady(fn: () => void): void,
-  onPlay(fn: (frame: number, fps: number) => void): void,
+  onPlay(fn: (frame: number, interval: number) => void): void,
   moveTo(position: { x?: number, y?: number }): void,
   toggleVisibility(visibility: boolean): void,
 }

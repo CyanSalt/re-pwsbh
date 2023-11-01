@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import BackgroundFrame from './BackgroundFrame.vue'
+import BlackBirdFrame from './BlackBirdFrame.vue'
 import ClappingYukiFrame from './ClappingYukiFrame.vue'
 import JumpingYukiFrame from './JumpingYukiFrame.vue'
 import MainFrame from './MainFrame.vue'
@@ -26,6 +27,8 @@ function getCurrentComponent() {
       return PeekingPigeonFrame
     case 'static-yuki-frame':
       return StaticYukiFrame
+    case 'black-bird-frame':
+      return BlackBirdFrame
   }
 }
 
