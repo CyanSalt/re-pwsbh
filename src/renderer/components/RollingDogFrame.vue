@@ -36,6 +36,10 @@ const sustainLength = 58
 
 const willShowMessage = $computed(() => lastPosition > 1000)
 
+worldBridge.keyframes.once('keyframe-from-172', () => {
+  worldBridge.toggleVisibility(false)
+})
+
 worldBridge.onPlay(frame => {
   // Also see src/main/window.ts
   if (frame >= 172) {
@@ -53,6 +57,10 @@ worldBridge.onPlay(frame => {
     worldBridge.moveTo({
       x: worldBridge.initialPosition.x + Math.round(magicNumber * lastPosition),
     })
+  } else {
+    if (startFrame === 172) {
+      worldBridge.keyframes.emit('keyframe-from-172')
+    }
   }
 })
 </script>

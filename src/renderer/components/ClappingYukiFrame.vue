@@ -9,11 +9,11 @@ const backgroundStyle = $computed(() => `url('${background}')`)
 let startFrame = 69
 const sustainLength = 18
 
-worldBridge.keyframes.once('keyframe-magic-69', () => {
+worldBridge.keyframes.once('keyframe-from-69', () => {
   worldBridge.toggleVisibility(false)
 })
 
-worldBridge.keyframes.once('keyframe-magic-220', () => {
+worldBridge.keyframes.once('keyframe-from-220', () => {
   worldBridge.toggleVisibility(false)
 })
 
@@ -37,9 +37,9 @@ worldBridge.onPlay(frame => {
     })
   } else {
     if (startFrame === 69) {
-      worldBridge.keyframes.emit('keyframe-magic-69')
+      worldBridge.keyframes.emit('keyframe-from-69')
     } else if (startFrame === 220) {
-      worldBridge.keyframes.emit('keyframe-magic-220')
+      worldBridge.keyframes.emit('keyframe-from-220')
     }
   }
 })
