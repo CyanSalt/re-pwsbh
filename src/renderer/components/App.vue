@@ -6,7 +6,7 @@ import RollingDogFrame from './RollingDogFrame.vue'
 import WalkingDogFrame from './WalkingDogFrame.vue'
 
 function getCurrentComponent() {
-  switch (worldBridge.args[0]) {
+  switch (worldBridge.name) {
     case 'main-frame':
       return MainFrame
     case 'background-frame':

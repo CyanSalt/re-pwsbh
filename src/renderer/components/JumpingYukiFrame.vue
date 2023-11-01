@@ -75,104 +75,185 @@ watchEffect(() => {
   }
 })
 
+worldBridge.keyframes.once('keyframe-153', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-172', () => {
+  worldBridge.toggleVisibility(true)
+  movingRightStartedAt = performance.now()
+})
+
+worldBridge.keyframes.once('keyframe-235', () => {
+  movingRightStartedAt = 0
+  worldBridge.toggleVisibility(false)
+  worldBridge.moveTo(worldBridge.initialPosition)
+})
+
+worldBridge.keyframes.once('keyframe-315', () => {
+  worldBridge.toggleVisibility(true)
+})
+
+worldBridge.keyframes.once('keyframe-619', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-1228', () => {
+  worldBridge.toggleVisibility(true)
+})
+
+worldBridge.keyframes.once('keyframe-1371', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-1392', () => {
+  worldBridge.toggleVisibility(true)
+  movingRightStartedAt = performance.now()
+})
+
+worldBridge.keyframes.once('keyframe-1454', () => {
+  movingRightStartedAt = 0
+  worldBridge.toggleVisibility(false)
+  worldBridge.moveTo(worldBridge.initialPosition)
+})
+
+worldBridge.keyframes.once('keyframe-1685', () => {
+  worldBridge.toggleVisibility(true)
+})
+
+worldBridge.keyframes.once('keyframe-1811', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-1874', () => {
+  worldBridge.toggleVisibility(true)
+})
+
+worldBridge.keyframes.once('keyframe-1979', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-1998', () => {
+  worldBridge.toggleVisibility(true)
+  movingRightStartedAt = performance.now()
+})
+
+worldBridge.keyframes.once('keyframe-2062', () => {
+  movingRightStartedAt = 0
+  worldBridge.toggleVisibility(false)
+  worldBridge.moveTo(worldBridge.initialPosition)
+})
+
+worldBridge.keyframes.once('keyframe-2151', () => {
+  worldBridge.toggleVisibility(true)
+})
+
+worldBridge.keyframes.once('keyframe-2284', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-2304', () => {
+  worldBridge.toggleVisibility(true)
+  movingRightStartedAt = performance.now()
+})
+
+worldBridge.keyframes.once('keyframe-2369', () => {
+  movingRightStartedAt = 0
+  worldBridge.toggleVisibility(false)
+  worldBridge.moveTo(worldBridge.initialPosition)
+})
+
+worldBridge.keyframes.once('keyframe-2523', () => {
+  worldBridge.toggleVisibility(true)
+})
+
+worldBridge.keyframes.once('keyframe-2817', () => {
+  worldBridge.toggleVisibility(false)
+})
+
 worldBridge.onPlay(frame => {
   if (frame >= 2817) {
-    worldBridge.toggleVisibility(false)
+    worldBridge.keyframes.emit('keyframe-2817')
     return
   }
   if (frame >= 2523) {
+    worldBridge.keyframes.emit('keyframe-2523')
     state = YukiState.yellowBlow
-    worldBridge.toggleVisibility(true)
     return
   }
   if (frame >= 2369) {
-    movingRightStartedAt = 0
-    worldBridge.toggleVisibility(false)
-    worldBridge.moveTo(worldBridge.initialPosition)
+    worldBridge.keyframes.emit('keyframe-2369')
     jumpingSpace = 1
     jumpingHeight = 1
     return
   }
   if (frame >= 2304) {
+    worldBridge.keyframes.emit('keyframe-2304')
     jumpingSpace = 0.4
-    worldBridge.toggleVisibility(true)
     jumpingHeight = 0
-    if (!movingRightStartedAt) {
-      movingRightStartedAt = performance.now()
-    }
     return
   }
   if (frame >= 2284) {
-    worldBridge.toggleVisibility(false)
+    worldBridge.keyframes.emit('keyframe-2284')
     return
   }
   if (frame >= 2151) {
-    worldBridge.toggleVisibility(true)
+    worldBridge.keyframes.emit('keyframe-2151')
     return
   }
   if (frame >= 2062) {
-    movingRightStartedAt = 0
-    worldBridge.toggleVisibility(false)
+    worldBridge.keyframes.emit('keyframe-2062')
     jumpingSpace = 1
-    worldBridge.moveTo(worldBridge.initialPosition)
     jumpingHeight = 1
     return
   }
   if (frame >= 1998) {
+    worldBridge.keyframes.emit('keyframe-1998')
     jumpingSpace = 0.4
-    worldBridge.toggleVisibility(true)
     jumpingHeight = 0
-    if (!movingRightStartedAt) {
-      movingRightStartedAt = performance.now()
-    }
     return
   }
   if (frame >= 1979) {
-    worldBridge.toggleVisibility(false)
+    worldBridge.keyframes.emit('keyframe-1979')
     return
   }
   if (frame >= 1874) {
+    worldBridge.keyframes.emit('keyframe-1874')
     state = YukiState.yellowNormal
-    worldBridge.toggleVisibility(true)
     return
   }
   if (frame >= 1811) {
-    worldBridge.toggleVisibility(false)
+    worldBridge.keyframes.emit('keyframe-1811')
     return
   }
   if (frame >= 1685) {
+    worldBridge.keyframes.emit('keyframe-1685')
     state = YukiState.yellowBlow
-    worldBridge.toggleVisibility(true)
     return
   }
   if (frame >= 1454) {
-    movingRightStartedAt = 0
-    worldBridge.toggleVisibility(false)
+    worldBridge.keyframes.emit('keyframe-1454')
     jumpingSpace = 1
-    worldBridge.moveTo(worldBridge.initialPosition)
     jumpingHeight = 1
     return
   }
   if (frame >= 1392) {
+    worldBridge.keyframes.emit('keyframe-1392')
     jumpingSpace = 0.4
-    worldBridge.toggleVisibility(true)
     jumpingHeight = 0
-    if (!movingRightStartedAt) {
-      movingRightStartedAt = performance.now()
-    }
     return
   }
   if (frame >= 1371) {
-    worldBridge.toggleVisibility(false)
+    worldBridge.keyframes.emit('keyframe-1371')
     return
   }
   if (frame >= 1228) {
+    worldBridge.keyframes.emit('keyframe-1228')
     state = YukiState.yellowNormal
-    worldBridge.toggleVisibility(true)
     return
   }
   if (frame >= 619) {
-    worldBridge.toggleVisibility(false)
+    worldBridge.keyframes.emit('keyframe-619')
     state = YukiState.yellowNormal
     return
   }
@@ -189,29 +270,24 @@ worldBridge.onPlay(frame => {
     return
   }
   if (frame >= 315) {
+    worldBridge.keyframes.emit('keyframe-315')
     state = YukiState.yellowBlow
-    worldBridge.toggleVisibility(true)
     return
   }
   if (frame >= 235) {
-    movingRightStartedAt = 0
-    worldBridge.toggleVisibility(false)
+    worldBridge.keyframes.emit('keyframe-235')
     jumpingSpace = 1
-    worldBridge.moveTo(worldBridge.initialPosition)
     jumpingHeight = 1
     return
   }
   if (frame >= 172) {
+    worldBridge.keyframes.emit('keyframe-172')
     jumpingSpace = 0.4
-    worldBridge.toggleVisibility(true)
     jumpingHeight = 0
-    if (!movingRightStartedAt) {
-      movingRightStartedAt = performance.now()
-    }
     return
   }
   if (frame >= 153) {
-    worldBridge.toggleVisibility(false)
+    worldBridge.keyframes.emit('keyframe-153')
     return
   }
 })
