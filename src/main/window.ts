@@ -21,10 +21,10 @@ function createWindow(name: string, options?: Partial<BrowserWindowConstructorOp
   if (options?.parent) {
     const screenSize = screen.getDisplayMatching(options.parent.getBounds()).workAreaSize
     if (!x) {
-      x = (screenSize.width - width) / 2
+      x = Math.round((screenSize.width - width) / 2)
     }
     if (!y) {
-      y = (screenSize.height - height) / 2
+      y = Math.round((screenSize.height - height) / 2)
     }
   }
   const frame = new BrowserWindow({
@@ -63,8 +63,8 @@ function showWalkingDogFrame(
     height: 126,
   }
   frame.setPosition(
-    (screenSize.width - windowSize.width) / 2 + offsetX,
-    (screenSize.height - windowSize.height) / 2 + 200,
+    Math.round((screenSize.width - windowSize.width) / 2) + offsetX,
+    Math.round((screenSize.height - windowSize.height) / 2) + 200,
   )
   frame.show()
 }
@@ -105,8 +105,8 @@ function createWalkingDogFrame(mainFrame: BrowserWindow) {
     parent: mainFrame,
     title: '勾',
     ...windowSize,
-    x: (screenSize.width - windowSize.width) / 2,
-    y: (screenSize.height - windowSize.height) / 2 + 200,
+    x: Math.round((screenSize.width - windowSize.width) / 2),
+    y: Math.round((screenSize.height - windowSize.height) / 2) + 200,
     show: false,
     focusable: false,
   })
@@ -122,7 +122,7 @@ function createRollingDogFrame(mainFrame: BrowserWindow) {
     parent: mainFrame,
     title: '勾',
     ...windowSize,
-    x: (screenSize.width - windowSize.width) / 2 - 300,
+    x: Math.round((screenSize.width - windowSize.width) / 2) - 300,
     y: screenSize.height - windowSize.height - 30,
     show: false,
     focusable: false,
@@ -167,8 +167,8 @@ function createStaticYukiFrame(mainFrame: BrowserWindow, offsetX: number) {
     parent: mainFrame,
     title: 'Error',
     ...windowSize,
-    x: (screenSize.width - windowSize.width) / 2 + offsetX,
-    y: (screenSize.height - windowSize.height) / 2,
+    x: Math.round((screenSize.width - windowSize.width) / 2) + offsetX,
+    y: Math.round((screenSize.height - windowSize.height) / 2),
     show: false,
     focusable: false,
   })
@@ -184,8 +184,25 @@ function createBlackBirdFrame(mainFrame: BrowserWindow) {
     parent: mainFrame,
     title: '',
     ...windowSize,
-    x: (screenSize.width - windowSize.width) / 2 - 500,
-    y: screenSize.height / 2 - windowSize.height + 400,
+    x: Math.round((screenSize.width - windowSize.width) / 2) - 500,
+    y: Math.round(screenSize.height / 2) - windowSize.height + 400,
+    show: false,
+    focusable: false,
+  })
+}
+
+function createWhiteBirdFrame(mainFrame: BrowserWindow) {
+  const screenSize = screen.getDisplayMatching(mainFrame.getBounds()).workAreaSize
+  const windowSize = {
+    width: 267,
+    height: 406,
+  }
+  return createWindow('white-bird-frame', {
+    parent: mainFrame,
+    title: '',
+    ...windowSize,
+    x: Math.round((screenSize.width - windowSize.width) / 2) + 500,
+    y: Math.round(screenSize.height / 2) - windowSize.height + 400,
     show: false,
     focusable: false,
   })
@@ -215,6 +232,7 @@ export function initializeWindows() {
   const staticYukiCenterFrame = createStaticYukiFrame(mainFrame, 0)
   const staticYukiRightFrame = createStaticYukiFrame(mainFrame, 400)
   const blackBirdFrame = createBlackBirdFrame(mainFrame)
+  const whiteBirdFrame = createWhiteBirdFrame(mainFrame)
 
   const whenReady = Promise.all(
     BrowserWindow.getAllWindows().map(frame => new Promise<void>(resolve => {
@@ -356,6 +374,7 @@ export function initializeWindows() {
 
   emitter.once('black-bird-white-bird:keyframe-315', () => {
     blackBirdFrame.show()
+    whiteBirdFrame.show()
   })
 
   let startedAt = 0

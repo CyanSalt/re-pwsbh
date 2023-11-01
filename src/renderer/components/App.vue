@@ -8,6 +8,7 @@ import PeekingPigeonFrame from './PeekingPigeonFrame.vue'
 import RollingDogFrame from './RollingDogFrame.vue'
 import StaticYukiFrame from './StaticYukiFrame.vue'
 import WalkingDogFrame from './WalkingDogFrame.vue'
+import WhiteBirdFrame from './WhiteBirdFrame.vue'
 
 function getCurrentComponent() {
   switch (worldBridge.name) {
@@ -29,6 +30,8 @@ function getCurrentComponent() {
       return StaticYukiFrame
     case 'black-bird-frame':
       return BlackBirdFrame
+    case 'white-bird-frame':
+      return WhiteBirdFrame
   }
 }
 
