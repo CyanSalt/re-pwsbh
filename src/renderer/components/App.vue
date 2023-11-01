@@ -5,6 +5,7 @@ import JumpingYukiFrame from './JumpingYukiFrame.vue'
 import MainFrame from './MainFrame.vue'
 import PeekingPigeonFrame from './PeekingPigeonFrame.vue'
 import RollingDogFrame from './RollingDogFrame.vue'
+import StaticYukiFrame from './StaticYukiFrame.vue'
 import WalkingDogFrame from './WalkingDogFrame.vue'
 
 function getCurrentComponent() {
@@ -23,6 +24,8 @@ function getCurrentComponent() {
       return ClappingYukiFrame
     case 'peeking-pigeon-frame':
       return PeekingPigeonFrame
+    case 'static-yuki-frame':
+      return StaticYukiFrame
   }
 }
 

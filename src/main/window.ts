@@ -158,6 +158,23 @@ function createPeekingPigeonFrame(mainFrame: BrowserWindow) {
   })
 }
 
+function createStaticYukiFrame(mainFrame: BrowserWindow, offsetX: number) {
+  const screenSize = screen.getDisplayMatching(mainFrame.getBounds()).workAreaSize
+  const windowSize = {
+    width: 240,
+    height: 578,
+  }
+  return createWindow('static-yuki-frame', {
+    parent: mainFrame,
+    title: '小雪',
+    ...windowSize,
+    x: (screenSize.width - windowSize.width) / 2 + offsetX,
+    y: (screenSize.height - windowSize.height) / 2,
+    show: false,
+    focusable: false,
+  })
+}
+
 function loop(fn: Parameters<typeof raf>[0]) {
   raf(timestamp => {
     fn(timestamp)
@@ -178,6 +195,9 @@ export function initializeWindows() {
   const rollingDogFrame = createRollingDogFrame(mainFrame)
   const clappingYukiFrame = createClappingYukiFrame(mainFrame)
   const peekingPigeonFrame = createPeekingPigeonFrame(mainFrame)
+  const staticYukiLeftFrame = createStaticYukiFrame(mainFrame, -400)
+  const staticYukiCenterFrame = createStaticYukiFrame(mainFrame, 0)
+  const staticYukiRightFrame = createStaticYukiFrame(mainFrame, 400)
 
   const whenReady = Promise.all(
     BrowserWindow.getAllWindows().map(frame => new Promise<void>(resolve => {
@@ -305,6 +325,18 @@ export function initializeWindows() {
     peekingPigeonFrame.show()
   })
 
+  emitter.once('static-yuki:keyframe-234', () => {
+    staticYukiLeftFrame.show()
+  })
+
+  emitter.once('static-yuki:keyframe-244', () => {
+    staticYukiCenterFrame.show()
+  })
+
+  emitter.once('static-yuki:keyframe-254', () => {
+    staticYukiRightFrame.show()
+  })
+
   let startedAt = 0
 
   ipcMain.on('sync-time', (event, time: number) => {
@@ -360,6 +392,14 @@ export function initializeWindows() {
       emitter.emit('clapping-yuki-peeking-pigeon:keyframe-220')
     } else if (frame >= 69) {
       emitter.emit('clapping-yuki-peeking-pigeon:keyframe-69')
+    }
+    // Static Yuki
+    if (frame >= 254) {
+      emitter.emit('static-yuki:keyframe-254')
+    } else if (frame >= 244) {
+      emitter.emit('static-yuki:keyframe-244')
+    } else if (frame >= 234) {
+      emitter.emit('static-yuki:keyframe-234')
     }
     broadcast('play', frame, FPS)
   })
