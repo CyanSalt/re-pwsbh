@@ -246,6 +246,17 @@ function createStaticPigeonFrame(mainFrame: BrowserWindow, offsetX: number, para
   }, params)
 }
 
+function createFightingFrame(mainFrame: BrowserWindow) {
+  return createWindow('fighting-frame', {
+    parent: mainFrame,
+    title: '',
+    width: 1189,
+    height: 668,
+    show: false,
+    focusable: false,
+  })
+}
+
 function loop(fn: Parameters<typeof raf>[0]) {
   raf(timestamp => {
     fn(timestamp)
@@ -276,6 +287,7 @@ export function initializeWindows() {
   const staticPigeonLeftInSideFrame = createStaticPigeonFrame(mainFrame, -150)
   const staticPigeonRightInSideFrame = createStaticPigeonFrame(mainFrame, 150)
   const staticPigeonRightOutSideFrame = createStaticPigeonFrame(mainFrame, 450, 'white')
+  const fightingFrame = createFightingFrame(mainFrame)
 
   const whenReady = Promise.all(
     BrowserWindow.getAllWindows().map(frame => new Promise<void>(resolve => {
@@ -448,6 +460,10 @@ export function initializeWindows() {
     staticPigeonRightOutSideFrame.show()
   })
 
+  emitter.once('fighting:keyframe-1184', () => {
+    fightingFrame.show()
+  })
+
   let startedAt = -1
 
   ipcMain.on('sync-time', (event, time: number) => {
@@ -525,7 +541,7 @@ export function initializeWindows() {
     if (frame >= 619) {
       emitter.emit('walking-yuki:keyframe-619')
     }
-    // StaticPigeon
+    // Static pigeons
     if (frame >= 1176) {
       emitter.emit('static-pigeon:keyframe-1176')
     } else if (frame >= 1167) {
@@ -534,6 +550,10 @@ export function initializeWindows() {
       emitter.emit('static-pigeon:keyframe-1158')
     } else if (frame >= 1149) {
       emitter.emit('static-pigeon:keyframe-1149')
+    }
+    // Fighting
+    if (frame >= 1184) {
+      emitter.emit('fighting:keyframe-1184')
     }
     broadcast('play', frame, frameInterval)
   })

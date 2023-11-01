@@ -2,6 +2,7 @@
 import BackgroundFrame from './BackgroundFrame.vue'
 import BlackBirdFrame from './BlackBirdFrame.vue'
 import ClappingYukiFrame from './ClappingYukiFrame.vue'
+import FightingFrame from './FightingFrame.vue'
 import JumpingYukiFrame from './JumpingYukiFrame.vue'
 import MainFrame from './MainFrame.vue'
 import PeekingPigeonFrame from './PeekingPigeonFrame.vue'
@@ -38,6 +39,8 @@ function getCurrentComponent() {
       return WalkingYukiFrame
     case 'static-pigeon-frame':
       return StaticPigeonFrame
+    case 'fighting-frame':
+      return FightingFrame
   }
 }
 
