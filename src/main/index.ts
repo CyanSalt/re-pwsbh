@@ -64,31 +64,39 @@ function handleMessages() {
   let walkingDogRightInsideFrame: BrowserWindow | undefined
   let walkingDogRightMiddleFrame: BrowserWindow | undefined
   let walkingDogRightOutsideFrame: BrowserWindow | undefined
+  let rollingDogFrame: BrowserWindow | undefined
   ipcMain.on('get-fps', event => {
     event.returnValue = FPS
   })
   ipcMain.on('sync-time', (event, time: number) => {
-    const windowFrame = BrowserWindow.fromWebContents(event.sender)
-    if (!windowFrame) return
+    const mainFrame = BrowserWindow.fromWebContents(event.sender)
+    if (!mainFrame) return
     const frame = time * 1000 / FPS
-    if (frame >= 0 && !backgroundFrame) {
-      backgroundFrame = createWindow(['background-frame'], {
-        title: '背景呐',
-        width: 1104,
-        height: 537,
-        center: true,
-        focusable: false,
-      })
+    // Background
+    if (frame >= 0) {
+      if (!backgroundFrame) {
+        backgroundFrame = createWindow(['background-frame'], {
+          title: '背景呐',
+          width: 1104,
+          height: 537,
+          center: true,
+          focusable: false,
+        })
+      }
     }
-    if (frame >= 9 && !jumpingYukiFrame) {
-      jumpingYukiFrame = createWindow(['jumping-yuki-frame'], {
-        title: '小雪',
-        width: 240,
-        height: 578,
-        center: true,
-        focusable: false,
-      })
+    // Jumping Yuki
+    if (frame >= 9) {
+      if (!jumpingYukiFrame) {
+        jumpingYukiFrame = createWindow(['jumping-yuki-frame'], {
+          title: '小雪',
+          width: 240,
+          height: 578,
+          center: true,
+          focusable: false,
+        })
+      }
     }
+    // Walking dogs
     if (frame >= 2284) {
       if (walkingDogLeftOutsideFrame) {
         walkingDogLeftOutsideFrame.hide()
@@ -109,15 +117,15 @@ function handleMessages() {
         walkingDogRightOutsideFrame.hide()
       }
     } else if (frame >= 2217) {
-      walkingDogLeftOutsideFrame = createWalkingDogFrame(walkingDogLeftOutsideFrame, windowFrame, -562)
-      walkingDogRightOutsideFrame = createWalkingDogFrame(walkingDogRightOutsideFrame, windowFrame, 558)
+      walkingDogLeftOutsideFrame = createWalkingDogFrame(walkingDogLeftOutsideFrame, mainFrame, -562)
+      walkingDogRightOutsideFrame = createWalkingDogFrame(walkingDogRightOutsideFrame, mainFrame, 558)
     } else if (frame >= 2151) {
-      walkingDogLeftOutsideFrame = createWalkingDogFrame(walkingDogLeftOutsideFrame, windowFrame, -450)
-      walkingDogLeftMiddleFrame = createWalkingDogFrame(walkingDogLeftMiddleFrame, windowFrame, -338)
-      walkingDogLeftInsideFrame = createWalkingDogFrame(walkingDogLeftInsideFrame, windowFrame, -226)
-      walkingDogRightInsideFrame = createWalkingDogFrame(walkingDogRightInsideFrame, windowFrame, 222)
-      walkingDogRightMiddleFrame = createWalkingDogFrame(walkingDogRightMiddleFrame, windowFrame, 334)
-      walkingDogRightOutsideFrame = createWalkingDogFrame(walkingDogRightOutsideFrame, windowFrame, 446)
+      walkingDogLeftOutsideFrame = createWalkingDogFrame(walkingDogLeftOutsideFrame, mainFrame, -450)
+      walkingDogLeftMiddleFrame = createWalkingDogFrame(walkingDogLeftMiddleFrame, mainFrame, -338)
+      walkingDogLeftInsideFrame = createWalkingDogFrame(walkingDogLeftInsideFrame, mainFrame, -226)
+      walkingDogRightInsideFrame = createWalkingDogFrame(walkingDogRightInsideFrame, mainFrame, 222)
+      walkingDogRightMiddleFrame = createWalkingDogFrame(walkingDogRightMiddleFrame, mainFrame, 334)
+      walkingDogRightOutsideFrame = createWalkingDogFrame(walkingDogRightOutsideFrame, mainFrame, 446)
     } else if (frame >= 1979) {
       if (walkingDogLeftInsideFrame) {
         walkingDogLeftInsideFrame.hide()
@@ -126,8 +134,8 @@ function handleMessages() {
         walkingDogRightInsideFrame.hide()
       }
     } else if (frame >= 1874) {
-      walkingDogLeftInsideFrame = createWalkingDogFrame(walkingDogLeftInsideFrame, windowFrame, -225)
-      walkingDogRightInsideFrame = createWalkingDogFrame(walkingDogRightInsideFrame, windowFrame, 225)
+      walkingDogLeftInsideFrame = createWalkingDogFrame(walkingDogLeftInsideFrame, mainFrame, -225)
+      walkingDogRightInsideFrame = createWalkingDogFrame(walkingDogRightInsideFrame, mainFrame, 225)
     } else if (frame >= 1527) {
       if (walkingDogLeftOutsideFrame) {
         walkingDogLeftOutsideFrame.hide()
@@ -142,10 +150,10 @@ function handleMessages() {
         walkingDogRightOutsideFrame.hide()
       }
     } else if (frame >= 1491) {
-      walkingDogLeftOutsideFrame = createWalkingDogFrame(walkingDogLeftOutsideFrame, windowFrame, -450)
-      walkingDogLeftInsideFrame = createWalkingDogFrame(walkingDogLeftInsideFrame, windowFrame, -225)
-      walkingDogRightInsideFrame = createWalkingDogFrame(walkingDogRightInsideFrame, windowFrame, 225)
-      walkingDogRightOutsideFrame = createWalkingDogFrame(walkingDogRightOutsideFrame, windowFrame, 450)
+      walkingDogLeftOutsideFrame = createWalkingDogFrame(walkingDogLeftOutsideFrame, mainFrame, -450)
+      walkingDogLeftInsideFrame = createWalkingDogFrame(walkingDogLeftInsideFrame, mainFrame, -225)
+      walkingDogRightInsideFrame = createWalkingDogFrame(walkingDogRightInsideFrame, mainFrame, 225)
+      walkingDogRightOutsideFrame = createWalkingDogFrame(walkingDogRightOutsideFrame, mainFrame, 450)
     } else if (frame >= 1388) {
       if (walkingDogLeftOutsideFrame) {
         walkingDogLeftOutsideFrame.hide()
@@ -161,10 +169,10 @@ function handleMessages() {
         walkingDogRightInsideFrame.hide()
       }
     } else if (frame >= 1228) {
-      walkingDogLeftOutsideFrame = createWalkingDogFrame(walkingDogLeftOutsideFrame, windowFrame, -450)
-      walkingDogLeftInsideFrame = createWalkingDogFrame(walkingDogLeftInsideFrame, windowFrame, -225)
-      walkingDogRightInsideFrame = createWalkingDogFrame(walkingDogRightInsideFrame, windowFrame, 225)
-      walkingDogRightOutsideFrame = createWalkingDogFrame(walkingDogRightOutsideFrame, windowFrame, 450)
+      walkingDogLeftOutsideFrame = createWalkingDogFrame(walkingDogLeftOutsideFrame, mainFrame, -450)
+      walkingDogLeftInsideFrame = createWalkingDogFrame(walkingDogLeftInsideFrame, mainFrame, -225)
+      walkingDogRightInsideFrame = createWalkingDogFrame(walkingDogRightInsideFrame, mainFrame, 225)
+      walkingDogRightOutsideFrame = createWalkingDogFrame(walkingDogRightOutsideFrame, mainFrame, 450)
     } else if (frame >= 309) {
       if (walkingDogLeftOutsideFrame) {
         walkingDogLeftOutsideFrame.hide()
@@ -182,11 +190,11 @@ function handleMessages() {
         walkingDogRightOutsideFrame.hide()
       }
     } else if (frame >= 272) {
-      walkingDogLeftOutsideFrame = createWalkingDogFrame(walkingDogLeftOutsideFrame, windowFrame, -450)
-      walkingDogLeftInsideFrame = createWalkingDogFrame(walkingDogLeftInsideFrame, windowFrame, -225)
-      walkingDogLeftMiddleFrame = createWalkingDogFrame(walkingDogLeftMiddleFrame, windowFrame, 0)
-      walkingDogRightInsideFrame = createWalkingDogFrame(walkingDogRightInsideFrame, windowFrame, 225)
-      walkingDogRightOutsideFrame = createWalkingDogFrame(walkingDogRightOutsideFrame, windowFrame, 450)
+      walkingDogLeftOutsideFrame = createWalkingDogFrame(walkingDogLeftOutsideFrame, mainFrame, -450)
+      walkingDogLeftInsideFrame = createWalkingDogFrame(walkingDogLeftInsideFrame, mainFrame, -225)
+      walkingDogLeftMiddleFrame = createWalkingDogFrame(walkingDogLeftMiddleFrame, mainFrame, 0)
+      walkingDogRightInsideFrame = createWalkingDogFrame(walkingDogRightInsideFrame, mainFrame, 225)
+      walkingDogRightOutsideFrame = createWalkingDogFrame(walkingDogRightOutsideFrame, mainFrame, 450)
     } else if (frame >= 152) {
       if (walkingDogLeftOutsideFrame) {
         walkingDogLeftOutsideFrame.hide()
@@ -195,8 +203,25 @@ function handleMessages() {
         walkingDogRightOutsideFrame.hide()
       }
     } else if (frame >= 14) {
-      walkingDogLeftOutsideFrame = createWalkingDogFrame(walkingDogLeftOutsideFrame, windowFrame, -450)
-      walkingDogRightOutsideFrame = createWalkingDogFrame(walkingDogRightOutsideFrame, windowFrame, 450)
+      walkingDogLeftOutsideFrame = createWalkingDogFrame(walkingDogLeftOutsideFrame, mainFrame, -450)
+      walkingDogRightOutsideFrame = createWalkingDogFrame(walkingDogRightOutsideFrame, mainFrame, 450)
+    }
+    // Rolling dog
+    if (frame >= 172) {
+      if (!rollingDogFrame) {
+        const screenSize = screen.getDisplayMatching(mainFrame.getBounds()).workAreaSize
+        const windowSize = {
+          width: 228,
+          height: 188,
+        }
+        rollingDogFrame = createWindow(['rolling-dog-frame'], {
+          title: '勾',
+          ...windowSize,
+          x: (screenSize.width - windowSize.width) / 2 - 300,
+          y: screenSize.height - windowSize.height - 30,
+          focusable: false,
+        })
+      }
     }
     broadcast('time-update', time)
   })

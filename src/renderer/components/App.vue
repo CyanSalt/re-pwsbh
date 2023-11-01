@@ -2,6 +2,7 @@
 import BackgroundFrame from './BackgroundFrame.vue'
 import JumpingYukiFrame from './JumpingYukiFrame.vue'
 import MainFrame from './MainFrame.vue'
+import RollingDogFrame from './RollingDogFrame.vue'
 import WalkingDogFrame from './WalkingDogFrame.vue'
 
 function getCurrentComponent() {
@@ -14,6 +15,8 @@ function getCurrentComponent() {
       return JumpingYukiFrame
     case 'walking-dog-frame':
       return WalkingDogFrame
+    case 'rolling-dog-frame':
+      return RollingDogFrame
   }
 }
 
