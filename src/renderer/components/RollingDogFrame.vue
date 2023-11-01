@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { watchEffect } from 'vue'
+import cross from '../assets/cross.png'
 import dogWalk1 from '../assets/dog-walk-1.png'
 import dogWalk2 from '../assets/dog-walk-2.png'
 import rollingDog from '../assets/rolling-dog.png'
@@ -34,14 +35,26 @@ let startFrame = 172
 let lastPosition = 1000
 const sustainLength = 58
 
-// const willShowMessage = $computed(() => lastPosition > 1000)
-
 worldBridge.keyframes.once('keyframe-from-172', () => {
   worldBridge.toggleVisibility(false)
 })
 
+worldBridge.keyframes.once('keyframe-811', () => {
+  new Notification('风力实在是太强了！', {
+    body: '我整条狗都快被吹飞了！',
+    icon: cross,
+  })
+})
+
 worldBridge.keyframes.once('keyframe-from-811', () => {
   worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-990', () => {
+  new Notification('风力实在是太强了！', {
+    body: '我整条狗都快被吹飞了！',
+    icon: cross,
+  })
 })
 
 worldBridge.keyframes.once('keyframe-from-990', () => {
@@ -51,9 +64,11 @@ worldBridge.keyframes.once('keyframe-from-990', () => {
 worldBridge.onPlay(frame => {
   // Also see src/main/window.ts
   if (frame >= 990) {
+    worldBridge.keyframes.emit('keyframe-990')
     startFrame = 990
     lastPosition = 1450
   } else if (frame >= 811) {
+    worldBridge.keyframes.emit('keyframe-811')
     startFrame = 811
     lastPosition = 1450
   } else if (frame >= 172) {
@@ -90,6 +105,7 @@ worldBridge.onPlay(frame => {
     <img :src="dogWalk1" class="offscreen-image">
     <img :src="dogWalk2" class="offscreen-image">
     <img :src="rollingDog" class="offscreen-image">
+    <img :src="cross" class="offscreen-image">
   </div>
 </template>
 
