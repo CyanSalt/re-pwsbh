@@ -6,6 +6,7 @@ const argIndex = process.argv.indexOf('--') + 1
 const additionalArgs = argIndex > 0 && argIndex < process.argv.length
   ? JSON.parse(process.argv[argIndex]) as {
     name: string,
+    params: unknown,
     initialPosition: { x: number, y: number },
     initialSize: { width: number, height: number },
   }
@@ -29,6 +30,7 @@ const keyframes = {
 
 const worldBridge: WorldBridge = {
   name: additionalArgs?.name ?? '',
+  params: additionalArgs?.params,
   initialPosition: additionalArgs?.initialPosition ?? { x: 0, y: 0 },
   initialSize: additionalArgs?.initialSize ?? { width: 800, height: 600 },
   keyframes,

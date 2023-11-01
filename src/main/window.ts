@@ -13,7 +13,7 @@ function broadcast(event: string, ...args: any[]) {
   })
 }
 
-function createWindow(name: string, options?: Partial<BrowserWindowConstructorOptions>) {
+function createWindow(name: string, options?: Partial<BrowserWindowConstructorOptions>, params?: unknown) {
   let x = options?.x
   let y = options?.y
   let width = options?.width ?? 800
@@ -38,6 +38,7 @@ function createWindow(name: string, options?: Partial<BrowserWindowConstructorOp
       preload: path.resolve(__dirname, '../preload/index.js'),
       additionalArguments: ['--', JSON.stringify({
         name,
+        params,
         initialPosition: { x: x ?? 0, y: y ?? 0 },
         initialSize: { width, height },
       })],
@@ -228,6 +229,23 @@ function createWalkingYukiFrame(mainFrame: BrowserWindow) {
   })
 }
 
+function createStaticPigeonFrame(mainFrame: BrowserWindow, offsetX: number, params?: unknown) {
+  const screenSize = screen.getDisplayMatching(mainFrame.getBounds()).workAreaSize
+  const windowSize = {
+    width: 399,
+    height: 346,
+  }
+  return createWindow('static-pigeon-frame', {
+    parent: mainFrame,
+    title: 'UP主',
+    ...windowSize,
+    x: Math.round((screenSize.width - windowSize.width) / 2) + offsetX,
+    y: Math.round((screenSize.height - windowSize.height) / 2) + 100,
+    show: false,
+    focusable: false,
+  }, params)
+}
+
 function loop(fn: Parameters<typeof raf>[0]) {
   raf(timestamp => {
     fn(timestamp)
@@ -254,6 +272,10 @@ export function initializeWindows() {
   const blackBirdFrame = createBlackBirdFrame(mainFrame)
   const whiteBirdFrame = createWhiteBirdFrame(mainFrame)
   const walkingYukiFrame = createWalkingYukiFrame(mainFrame)
+  const staticPigeonLeftOutSideFrame = createStaticPigeonFrame(mainFrame, -450)
+  const staticPigeonLeftInSideFrame = createStaticPigeonFrame(mainFrame, -150)
+  const staticPigeonRightInSideFrame = createStaticPigeonFrame(mainFrame, 150)
+  const staticPigeonRightOutSideFrame = createStaticPigeonFrame(mainFrame, 450, 'white')
 
   const whenReady = Promise.all(
     BrowserWindow.getAllWindows().map(frame => new Promise<void>(resolve => {
@@ -410,6 +432,22 @@ export function initializeWindows() {
     walkingYukiFrame.show()
   })
 
+  emitter.once('static-pigeon:keyframe-1149', () => {
+    staticPigeonLeftOutSideFrame.show()
+  })
+
+  emitter.once('static-pigeon:keyframe-1158', () => {
+    staticPigeonLeftInSideFrame.show()
+  })
+
+  emitter.once('static-pigeon:keyframe-1167', () => {
+    staticPigeonRightInSideFrame.show()
+  })
+
+  emitter.once('static-pigeon:keyframe-1176', () => {
+    staticPigeonRightOutSideFrame.show()
+  })
+
   let startedAt = -1
 
   ipcMain.on('sync-time', (event, time: number) => {
@@ -486,6 +524,16 @@ export function initializeWindows() {
     // Walking Yuki
     if (frame >= 619) {
       emitter.emit('walking-yuki:keyframe-619')
+    }
+    // StaticPigeon
+    if (frame >= 1176) {
+      emitter.emit('static-pigeon:keyframe-1176')
+    } else if (frame >= 1167) {
+      emitter.emit('static-pigeon:keyframe-1167')
+    } else if (frame >= 1158) {
+      emitter.emit('static-pigeon:keyframe-1158')
+    } else if (frame >= 1149) {
+      emitter.emit('static-pigeon:keyframe-1149')
     }
     broadcast('play', frame, frameInterval)
   })

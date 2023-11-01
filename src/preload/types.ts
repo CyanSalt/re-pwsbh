@@ -2,6 +2,7 @@ import type { EventEmitter } from 'node:events'
 
 export interface WorldBridge {
   name: string,
+  params: unknown,
   initialPosition: { x: number, y: number },
   initialSize: { width: number, height: number },
   keyframes: Pick<EventEmitter, 'once' | 'emit'>,
