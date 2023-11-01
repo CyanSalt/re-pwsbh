@@ -15,7 +15,6 @@ function handleMessages() {
     frame.setPosition(
       Math.round(position.x ?? originalX),
       Math.round(position.y ?? originalY),
-      true,
     )
   })
   ipcMain.on('toggle-visibility', (event, value: boolean) => {

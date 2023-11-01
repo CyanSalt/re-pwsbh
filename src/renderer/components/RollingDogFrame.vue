@@ -46,7 +46,7 @@ worldBridge.onPlay(frame => {
   if (frame <= startFrame + sustainLength) {
     const magicNumber = (frame - startFrame) / sustainLength
     worldBridge.moveTo({
-      x: worldBridge.initialPosition.x + magicNumber * lastPosition,
+      x: worldBridge.initialPosition.x + Math.round(magicNumber * lastPosition),
     })
   }
 })
