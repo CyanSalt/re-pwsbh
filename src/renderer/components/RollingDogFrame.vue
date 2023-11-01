@@ -30,13 +30,18 @@ watchEffect(onInvalidate => {
   })
 })
 
-let startFrame = 172 // Also see src/main/window.ts
+let startFrame = 172
 let lastPosition = $ref(1000)
 const sustainLength = 58
 
 const willShowMessage = $computed(() => lastPosition > 1000)
 
 worldBridge.onPlay(frame => {
+  // Also see src/main/window.ts
+  if (frame >= 172) {
+    startFrame = 172
+  }
+
   if (frame < startFrame + sustainLength - 30) {
     const magicNumber = frame % 6
     background = magicNumber < 3 ? dogWalk1 : dogWalk2

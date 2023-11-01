@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import BackgroundFrame from './BackgroundFrame.vue'
+import ClappingYukiFrame from './ClappingYukiFrame.vue'
 import JumpingYukiFrame from './JumpingYukiFrame.vue'
 import MainFrame from './MainFrame.vue'
+import PeekingPigeonFrame from './PeekingPigeonFrame.vue'
 import RollingDogFrame from './RollingDogFrame.vue'
 import WalkingDogFrame from './WalkingDogFrame.vue'
 
@@ -17,6 +19,10 @@ function getCurrentComponent() {
       return WalkingDogFrame
     case 'rolling-dog-frame':
       return RollingDogFrame
+    case 'clapping-yuki-frame':
+      return ClappingYukiFrame
+    case 'peeking-pigeon-frame':
+      return PeekingPigeonFrame
   }
 }
 

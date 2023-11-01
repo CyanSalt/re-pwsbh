@@ -7,6 +7,7 @@ const additionalArgs = argIndex > 0 && argIndex < process.argv.length
   ? JSON.parse(process.argv[argIndex]) as {
     name: string,
     initialPosition: { x: number, y: number },
+    initialSize: { width: number, height: number },
   }
   : undefined
 
@@ -29,6 +30,7 @@ const keyframes = {
 const worldBridge: WorldBridge = {
   name: additionalArgs?.name ?? '',
   initialPosition: additionalArgs?.initialPosition ?? { x: 0, y: 0 },
+  initialSize: additionalArgs?.initialSize ?? { width: 800, height: 600 },
   keyframes,
   syncTime(time) {
     ipcRenderer.send('sync-time', time)

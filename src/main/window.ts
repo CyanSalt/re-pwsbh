@@ -16,18 +16,22 @@ function broadcast(event: string, ...args: any[]) {
 function createWindow(name: string, options?: Partial<BrowserWindowConstructorOptions>) {
   let x = options?.x
   let y = options?.y
+  let width = options?.width ?? 800
+  let height = options?.height ?? 600
   if (options?.parent) {
     const screenSize = screen.getDisplayMatching(options.parent.getBounds()).workAreaSize
-    if (!x && options.width) {
-      x = (screenSize.width - options.width) / 2
+    if (!x) {
+      x = (screenSize.width - width) / 2
     }
-    if (!y && options.height) {
-      y = (screenSize.height - options.height) / 2
+    if (!y) {
+      y = (screenSize.height - height) / 2
     }
   }
   const frame = new BrowserWindow({
     ...options,
     show: false,
+    width,
+    height,
     x,
     y,
     webPreferences: {
@@ -36,6 +40,7 @@ function createWindow(name: string, options?: Partial<BrowserWindowConstructorOp
         name,
         fps: FPS,
         initialPosition: { x: x ?? 0, y: y ?? 0 },
+        initialSize: { width, height },
       })],
       backgroundThrottling: false,
     },
@@ -125,6 +130,34 @@ function createRollingDogFrame(mainFrame: BrowserWindow) {
   })
 }
 
+function createClappingYukiFrame(mainFrame: BrowserWindow) {
+  const screenSize = screen.getDisplayMatching(mainFrame.getBounds()).workAreaSize
+  return createWindow('clapping-yuki-frame', {
+    parent: mainFrame,
+    title: '',
+    width: 291,
+    height: 302,
+    x: screenSize.width,
+    y: screenSize.height,
+    show: false,
+    focusable: false,
+  })
+}
+
+function createPeekingPigeonFrame(mainFrame: BrowserWindow) {
+  const screenSize = screen.getDisplayMatching(mainFrame.getBounds()).workAreaSize
+  return createWindow('peeking-pigeon-frame', {
+    parent: mainFrame,
+    title: '',
+    width: 274,
+    height: 242,
+    x: 274,
+    y: screenSize.height,
+    show: false,
+    focusable: false,
+  })
+}
+
 function loop(fn: Parameters<typeof raf>[0]) {
   raf(timestamp => {
     fn(timestamp)
@@ -143,6 +176,8 @@ export function initializeWindows() {
   const walkingDogRightMiddleFrame = createWalkingDogFrame(mainFrame)
   const walkingDogRightOutsideFrame = createWalkingDogFrame(mainFrame)
   const rollingDogFrame = createRollingDogFrame(mainFrame)
+  const clappingYukiFrame = createClappingYukiFrame(mainFrame)
+  const peekingPigeonFrame = createPeekingPigeonFrame(mainFrame)
 
   const whenReady = Promise.all(
     BrowserWindow.getAllWindows().map(frame => new Promise<void>(resolve => {
@@ -260,6 +295,16 @@ export function initializeWindows() {
     rollingDogFrame.show()
   })
 
+  emitter.once('clapping-yuki-peeking-pigeon:keyframe-69', () => {
+    clappingYukiFrame.show()
+    peekingPigeonFrame.show()
+  })
+
+  emitter.once('clapping-yuki-peeking-pigeon:keyframe-220', () => {
+    clappingYukiFrame.show()
+    peekingPigeonFrame.show()
+  })
+
   let startedAt = 0
 
   ipcMain.on('sync-time', (event, time: number) => {
@@ -309,6 +354,12 @@ export function initializeWindows() {
     // Rolling dog
     if (frame >= 172) {
       emitter.emit('rolling-dog:keyframe-172')
+    }
+    // Clapping Yuki and Peeking pigeon
+    if (frame >= 220) {
+      emitter.emit('clapping-yuki-peeking-pigeon:keyframe-220')
+    } else if (frame >= 69) {
+      emitter.emit('clapping-yuki-peeking-pigeon:keyframe-69')
     }
     broadcast('play', frame, FPS)
   })
