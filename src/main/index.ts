@@ -26,6 +26,9 @@ function handleMessages() {
       frame.hide()
     }
   })
+  ipcMain.on('log', (event, value: unknown) => {
+    console.log(value)
+  })
 }
 
 async function initialize() {

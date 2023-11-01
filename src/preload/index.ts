@@ -49,6 +49,9 @@ const worldBridge: WorldBridge = {
   toggleVisibility(value) {
     ipcRenderer.send('toggle-visibility', value)
   },
+  log(value) {
+    ipcRenderer.send('log', value)
+  },
 }
 
 contextBridge.exposeInMainWorld('worldBridge', worldBridge)

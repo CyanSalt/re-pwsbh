@@ -208,6 +208,23 @@ function createWhiteBirdFrame(mainFrame: BrowserWindow) {
   })
 }
 
+function createWalkingYukiFrame(mainFrame: BrowserWindow) {
+  const screenSize = screen.getDisplayMatching(mainFrame.getBounds()).workAreaSize
+  const windowSize = {
+    width: 279,
+    height: 569,
+  }
+  return createWindow('walking-yuki-frame', {
+    parent: mainFrame,
+    title: '正在踱步...',
+    ...windowSize,
+    x: screenSize.width - windowSize.width,
+    y: Math.round((screenSize.height - windowSize.height) / 2),
+    show: false,
+    focusable: false,
+  })
+}
+
 function loop(fn: Parameters<typeof raf>[0]) {
   raf(timestamp => {
     fn(timestamp)
@@ -233,6 +250,7 @@ export function initializeWindows() {
   const staticYukiRightFrame = createStaticYukiFrame(mainFrame, 400)
   const blackBirdFrame = createBlackBirdFrame(mainFrame)
   const whiteBirdFrame = createWhiteBirdFrame(mainFrame)
+  const walkingYukiFrame = createWalkingYukiFrame(mainFrame)
 
   const whenReady = Promise.all(
     BrowserWindow.getAllWindows().map(frame => new Promise<void>(resolve => {
@@ -377,13 +395,18 @@ export function initializeWindows() {
     whiteBirdFrame.show()
   })
 
-  let startedAt = 0
+  emitter.once('walking-yuki:keyframe-619', () => {
+    walkingYukiFrame.show()
+  })
+
+  let startedAt = -1
 
   ipcMain.on('sync-time', (event, time: number) => {
     startedAt = performance.now() - time * 1000
   })
 
   loop(timestamp => {
+    if (startedAt < 0) return
     const frame = (timestamp - startedAt) / frameInterval
     // Background
     if (frame >= 0) {
@@ -444,6 +467,10 @@ export function initializeWindows() {
     // Black bird and white bird
     if (frame >= 315) {
       emitter.emit('black-bird-white-bird:keyframe-315')
+    }
+    // Walking Yuki
+    if (frame >= 619) {
+      emitter.emit('walking-yuki:keyframe-619')
     }
     broadcast('play', frame, frameInterval)
   })
