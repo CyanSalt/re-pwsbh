@@ -449,6 +449,46 @@ export function initializeWindows() {
     peekingPigeonFrame.show()
   })
 
+  emitter.once('clapping-yuki-peeking-pigeon:keyframe-1288', () => {
+    clappingYukiFrame.show()
+    peekingPigeonFrame.show()
+  })
+
+  emitter.once('clapping-yuki-peeking-pigeon:keyframe-1438', () => {
+    clappingYukiFrame.show()
+    peekingPigeonFrame.show()
+  })
+
+  emitter.once('clapping-yuki-peeking-pigeon:keyframe-1512', () => {
+    clappingYukiFrame.show()
+    peekingPigeonFrame.show()
+  })
+
+  emitter.once('clapping-yuki-peeking-pigeon:keyframe-1669', () => {
+    clappingYukiFrame.show()
+    peekingPigeonFrame.show()
+  })
+
+  emitter.once('clapping-yuki-peeking-pigeon:keyframe-1896', () => {
+    clappingYukiFrame.show()
+    peekingPigeonFrame.show()
+  })
+
+  emitter.once('clapping-yuki-peeking-pigeon:keyframe-2046', () => {
+    clappingYukiFrame.show()
+    peekingPigeonFrame.show()
+  })
+
+  emitter.once('clapping-yuki-peeking-pigeon:keyframe-2198', () => {
+    clappingYukiFrame.show()
+    peekingPigeonFrame.show()
+  })
+
+  emitter.once('clapping-yuki-peeking-pigeon:keyframe-2352', () => {
+    clappingYukiFrame.show()
+    peekingPigeonFrame.show()
+  })
+
   emitter.once('static-yuki:keyframe-234', () => {
     staticYukiLeftFrame.show()
   })
@@ -565,7 +605,23 @@ export function initializeWindows() {
       emitter.emit('rolling-dog:keyframe-172')
     }
     // Clapping Yuki and Peeking pigeon
-    if (frame >= 220) {
+    if (frame >= 2352) {
+      emitter.emit('clapping-yuki-peeking-pigeon:keyframe-2352')
+    } else if (frame >= 2198) {
+      emitter.emit('clapping-yuki-peeking-pigeon:keyframe-2198')
+    } else if (frame >= 2046) {
+      emitter.emit('clapping-yuki-peeking-pigeon:keyframe-2046')
+    } else if (frame >= 1896) {
+      emitter.emit('clapping-yuki-peeking-pigeon:keyframe-1896')
+    } else if (frame >= 1669) {
+      emitter.emit('clapping-yuki-peeking-pigeon:keyframe-1669')
+    } else if (frame >= 1512) {
+      emitter.emit('clapping-yuki-peeking-pigeon:keyframe-1512')
+    } else if (frame >= 1438) {
+      emitter.emit('clapping-yuki-peeking-pigeon:keyframe-1438')
+    } else if (frame >= 1288) {
+      emitter.emit('clapping-yuki-peeking-pigeon:keyframe-1288')
+    } else if (frame >= 220) {
       emitter.emit('clapping-yuki-peeking-pigeon:keyframe-220')
     } else if (frame >= 69) {
       emitter.emit('clapping-yuki-peeking-pigeon:keyframe-69')
