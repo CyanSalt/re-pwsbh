@@ -1,7 +1,9 @@
 <script lang="ts" setup>
+import AhhhhFrame from './AhhhhFrame.vue'
 import BackgroundFrame from './BackgroundFrame.vue'
 import BlackBirdFrame from './BlackBirdFrame.vue'
 import ClappingYukiFrame from './ClappingYukiFrame.vue'
+import ErrorFrame from './ErrorFrame.vue'
 import FightingFrame from './FightingFrame.vue'
 import JumpingYukiFrame from './JumpingYukiFrame.vue'
 import MainFrame from './MainFrame.vue'
@@ -41,6 +43,10 @@ function getCurrentComponent() {
       return StaticPigeonFrame
     case 'fighting-frame':
       return FightingFrame
+    case 'ahhhh-frame':
+      return AhhhhFrame
+    case 'error-frame':
+      return ErrorFrame
   }
 }
 
@@ -58,6 +64,7 @@ const currentComponent = getCurrentComponent()
 @font-face {
   font-family: 'Text';
   src: url('../assets/font.ttf') format('truetype');
+  font-display: block;
 }
 .app-frame {
   width: 100vw;

@@ -365,7 +365,7 @@ worldBridge.onPlay(frame => {
   if (frame >= 2523) {
     fontSize = 25
     textAlign = 'left'
-    text = '強風オールバック\r\n但是窗口'
+    text = '強風オールバック\r\n但是窗口\r\n'
   }
   if (frame >= 2602) {
     text = '原: https://youtu.be/D6DVTLvOupE\r\n实现: https://www.bilibili.com/video/BV1Kz4y1p7sz/\r\n'
@@ -374,7 +374,7 @@ worldBridge.onPlay(frame => {
     text = '重制: CyanSalt\r\n显示: Electron\r\n'
   }
   if (frame >= 2753) {
-    text = '源码:\r\nhttps://github.com/CyanSalt/re-pwsbh'
+    text = '源码:\r\nhttps://github.com/CyanSalt/re-pwsbh\r\n'
   }
   if (frame >= 2818) {
     fontSize = 100
@@ -397,7 +397,9 @@ worldBridge.onPlay(frame => {
 .background-text {
   position: absolute;
   top: 50%;
+  box-sizing: border-box;
   width: 100vw;
+  padding: 6px;
   color: #ffffff;
   font-family: 'Text';
   font-style: bold;

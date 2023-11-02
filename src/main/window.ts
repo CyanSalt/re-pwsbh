@@ -1,7 +1,7 @@
 import { EventEmitter } from 'node:events'
 import * as path from 'node:path'
 import type { BrowserWindowConstructorOptions } from 'electron'
-import { BrowserWindow, ipcMain, screen } from 'electron'
+import { BrowserWindow, ipcMain, screen, systemPreferences } from 'electron'
 import raf from 'raf'
 
 // The larger this value is, the slower the background will be played
@@ -28,8 +28,8 @@ function createWindow(name: string, options?: Partial<BrowserWindowConstructorOp
     }
   }
   const frame = new BrowserWindow({
-    ...options,
     show: false,
+    ...options,
     width,
     height,
     x,
@@ -83,7 +83,6 @@ function createBackgroundFrame(mainFrame: BrowserWindow) {
     title: '背景呐',
     width: 1104,
     height: 537,
-    show: false,
     focusable: false,
   })
 }
@@ -94,7 +93,6 @@ function createJumpingYukiFrame(mainFrame: BrowserWindow) {
     title: '小雪',
     width: 240,
     height: 578,
-    show: false,
     focusable: false,
   })
 }
@@ -111,7 +109,6 @@ function createWalkingDogFrame(mainFrame: BrowserWindow) {
     ...windowSize,
     x: Math.round((screenSize.width - windowSize.width) / 2),
     y: Math.round((screenSize.height - windowSize.height) / 2) + 200,
-    show: false,
     focusable: false,
   })
 }
@@ -128,7 +125,6 @@ function createRollingDogFrame(mainFrame: BrowserWindow) {
     ...windowSize,
     x: Math.round((screenSize.width - windowSize.width) / 2) - 300,
     y: screenSize.height - windowSize.height - 30,
-    show: false,
     focusable: false,
   })
 }
@@ -142,7 +138,6 @@ function createClappingYukiFrame(mainFrame: BrowserWindow) {
     height: 302,
     x: screenSize.width,
     y: screenSize.height,
-    show: false,
     focusable: false,
   })
 }
@@ -156,7 +151,6 @@ function createPeekingPigeonFrame(mainFrame: BrowserWindow) {
     height: 242,
     x: 274,
     y: screenSize.height,
-    show: false,
     focusable: false,
   })
 }
@@ -173,7 +167,6 @@ function createStaticYukiFrame(mainFrame: BrowserWindow, offsetX: number) {
     ...windowSize,
     x: Math.round((screenSize.width - windowSize.width) / 2) + offsetX,
     y: Math.round((screenSize.height - windowSize.height) / 2),
-    show: false,
     focusable: false,
   })
 }
@@ -190,7 +183,6 @@ function createBlackBirdFrame(mainFrame: BrowserWindow) {
     ...windowSize,
     x: Math.round((screenSize.width - windowSize.width) / 2) - 500,
     y: Math.round(screenSize.height / 2) - windowSize.height + 400,
-    show: false,
     focusable: false,
   })
 }
@@ -207,7 +199,6 @@ function createWhiteBirdFrame(mainFrame: BrowserWindow) {
     ...windowSize,
     x: Math.round((screenSize.width - windowSize.width) / 2) + 500,
     y: Math.round(screenSize.height / 2) - windowSize.height + 400,
-    show: false,
     focusable: false,
   })
 }
@@ -224,7 +215,6 @@ function createWalkingYukiFrame(mainFrame: BrowserWindow) {
     ...windowSize,
     x: screenSize.width - windowSize.width,
     y: Math.round((screenSize.height - windowSize.height) / 2),
-    show: false,
     focusable: false,
   })
 }
@@ -241,7 +231,6 @@ function createStaticPigeonFrame(mainFrame: BrowserWindow, offsetX: number, para
     ...windowSize,
     x: Math.round((screenSize.width - windowSize.width) / 2) + offsetX,
     y: Math.round((screenSize.height - windowSize.height) / 2) + 100,
-    show: false,
     focusable: false,
   }, params)
 }
@@ -252,9 +241,44 @@ function createFightingFrame(mainFrame: BrowserWindow) {
     title: '',
     width: 1189,
     height: 668,
-    show: false,
     focusable: false,
   })
+}
+
+function createAhhhhFrame(mainFrame: BrowserWindow) {
+  const screenSize = screen.getDisplayMatching(mainFrame.getBounds()).workAreaSize
+  const windowSize = {
+    width: 254,
+    height: 458,
+  }
+  return createWindow('ahhhh-frame', {
+    parent: mainFrame,
+    title: 'Ahhhh',
+    ...windowSize,
+    x: Math.round(screenSize.width / 2),
+    y: Math.round((screenSize.height - windowSize.height) / 2) + 100,
+    focusable: false,
+  })
+}
+
+function createErrorFrame(mainFrame: BrowserWindow, index: number) {
+  const screenSize = screen.getDisplayMatching(mainFrame.getBounds()).workAreaSize
+  const windowSize = {
+    width: 394,
+    height: 174,
+  }
+  return createWindow('error-frame', {
+    parent: mainFrame,
+    title: 'Error',
+    ...windowSize,
+    x: Math.round(screenSize.width / 2) - index * 40,
+    y: Math.round((screenSize.height - windowSize.height) / 2) + index * 30,
+    backgroundColor: process.platform === 'win32' ? systemPreferences.getColor('window') : (
+      process.platform === 'darwin' ? systemPreferences.getColor('window-background') : undefined
+    ),
+  }, process.platform === 'win32' ? systemPreferences.getColor('window-text') : (
+    process.platform === 'darwin' ? systemPreferences.getColor('text') : undefined
+  ))
 }
 
 function loop(fn: Parameters<typeof raf>[0]) {
@@ -288,6 +312,8 @@ export function initializeWindows() {
   const staticPigeonRightInSideFrame = createStaticPigeonFrame(mainFrame, 150)
   const staticPigeonRightOutSideFrame = createStaticPigeonFrame(mainFrame, 450, 'white')
   const fightingFrame = createFightingFrame(mainFrame)
+  const ahhhhFrame = createAhhhhFrame(mainFrame)
+  const errorFrames = Array.from({ length: 6 }, (_, index) => createErrorFrame(mainFrame, index))
 
   const whenReady = Promise.all(
     BrowserWindow.getAllWindows().map(frame => new Promise<void>(resolve => {
@@ -464,6 +490,25 @@ export function initializeWindows() {
     fightingFrame.show()
   })
 
+  emitter.once('ahhhh-error:keyframe-1212', () => {
+    ahhhhFrame.show()
+  })
+
+  const sleep = (timeout: number) => new Promise(resolve => setTimeout(resolve, timeout))
+
+  emitter.once('ahhhh-error:keyframe-1214', async () => {
+    for (const frame of errorFrames) {
+      frame.show()
+      await sleep(70)
+    }
+  })
+
+  emitter.once('ahhhh-error:keyframe-1246', () => {
+    errorFrames.forEach(frame => {
+      frame.hide()
+    })
+  })
+
   let startedAt = -1
 
   ipcMain.on('sync-time', (event, time: number) => {
@@ -554,6 +599,14 @@ export function initializeWindows() {
     // Fighting
     if (frame >= 1184) {
       emitter.emit('fighting:keyframe-1184')
+    }
+    // Ahhhh and errors
+    if (frame >= 1246) {
+      emitter.emit('ahhhh-error:keyframe-1246')
+    } else if (frame >= 1214) {
+      emitter.emit('ahhhh-error:keyframe-1214')
+    } else if (frame >= 1212) {
+      emitter.emit('ahhhh-error:keyframe-1212')
     }
     broadcast('play', frame, frameInterval)
   })
