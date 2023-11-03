@@ -1,11 +1,11 @@
 import { EventEmitter } from 'node:events'
 import * as path from 'node:path'
 import type { BrowserWindowConstructorOptions } from 'electron'
-import { BrowserWindow, ipcMain, screen, systemPreferences } from 'electron'
+import { BrowserWindow, ipcMain, screen } from 'electron'
 import raf from 'raf'
 
 // The larger this value is, the slower the background will be played
-const frameInterval = 46.5 // TODO: wtf?
+const frameInterval = 30 + 50 / 3 // TODO: wtf?
 
 function broadcast(event: string, ...args: any[]) {
   BrowserWindow.getAllWindows().forEach(frame => {
@@ -273,12 +273,8 @@ function createErrorFrame(mainFrame: BrowserWindow, index: number) {
     ...windowSize,
     x: Math.round(screenSize.width / 2) - index * 40,
     y: Math.round((screenSize.height - windowSize.height) / 2) + index * 30,
-    backgroundColor: process.platform === 'win32' ? systemPreferences.getColor('window') : (
-      process.platform === 'darwin' ? systemPreferences.getColor('window-background') : undefined
-    ),
-  }, process.platform === 'win32' ? systemPreferences.getColor('window-text') : (
-    process.platform === 'darwin' ? systemPreferences.getColor('text') : undefined
-  ))
+    frame: false,
+  })
 }
 
 function loop(fn: Parameters<typeof raf>[0]) {
