@@ -28,6 +28,7 @@ function createWindow(name: string, options?: Partial<BrowserWindowConstructorOp
     }
   }
   const frame = new BrowserWindow({
+    useContentSize: true,
     show: false,
     ...options,
     width,
