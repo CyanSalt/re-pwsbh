@@ -113,7 +113,7 @@ function createWalkingDogFrame(mainFrame: BrowserWindow) {
   })
 }
 
-function createRollingDogFrame(mainFrame: BrowserWindow) {
+function createRollingDogFrame(mainFrame: BrowserWindow, keyframes: number[]) {
   const screenSize = screen.getDisplayMatching(mainFrame.getBounds()).workAreaSize
   const windowSize = {
     width: 228,
@@ -126,7 +126,7 @@ function createRollingDogFrame(mainFrame: BrowserWindow) {
     x: Math.round((screenSize.width - windowSize.width) / 2) - 300,
     y: screenSize.height - windowSize.height - 30,
     focusable: false,
-  })
+  }, keyframes)
 }
 
 function createClappingYukiFrame(mainFrame: BrowserWindow) {
@@ -294,7 +294,10 @@ export function initializeWindows() {
   const walkingDogRightInsideFrame = createWalkingDogFrame(mainFrame)
   const walkingDogRightMiddleFrame = createWalkingDogFrame(mainFrame)
   const walkingDogRightOutsideFrame = createWalkingDogFrame(mainFrame)
-  const rollingDogFrame = createRollingDogFrame(mainFrame)
+  const rollingDogRightOutsideFrame = createRollingDogFrame(mainFrame, [172, 811, 990, 1391, 1989, 2305, 2405])
+  const rollingDogRightInsideFrame = createRollingDogFrame(mainFrame, [1395, 1993, 2309])
+  const rollingDogLeftInsideFrame = createRollingDogFrame(mainFrame, [1997, 2313])
+  const rollingDogLeftOutsideFrame = createRollingDogFrame(mainFrame, [2317])
   const clappingYukiFrame = createClappingYukiFrame(mainFrame)
   const peekingPigeonFrame = createPeekingPigeonFrame(mainFrame)
   const staticYukiLeftFrame = createStaticYukiFrame(mainFrame, -400)
@@ -424,15 +427,55 @@ export function initializeWindows() {
   })
 
   emitter.once('rolling-dog:keyframe-172', () => {
-    rollingDogFrame.show()
+    rollingDogRightOutsideFrame.show()
   })
 
   emitter.once('rolling-dog:keyframe-811', () => {
-    rollingDogFrame.show()
+    rollingDogRightOutsideFrame.show()
   })
 
   emitter.once('rolling-dog:keyframe-990', () => {
-    rollingDogFrame.show()
+    rollingDogRightOutsideFrame.show()
+  })
+
+  emitter.once('rolling-dog:keyframe-1391', () => {
+    rollingDogRightOutsideFrame.show()
+  })
+
+  emitter.once('rolling-dog:keyframe-1395', () => {
+    rollingDogRightInsideFrame.show()
+  })
+
+  emitter.once('rolling-dog:keyframe-1989', () => {
+    rollingDogRightOutsideFrame.show()
+  })
+
+  emitter.once('rolling-dog:keyframe-1993', () => {
+    rollingDogRightInsideFrame.show()
+  })
+
+  emitter.once('rolling-dog:keyframe-1997', () => {
+    rollingDogLeftInsideFrame.show()
+  })
+
+  emitter.once('rolling-dog:keyframe-2305', () => {
+    rollingDogRightOutsideFrame.show()
+  })
+
+  emitter.once('rolling-dog:keyframe-2309', () => {
+    rollingDogRightInsideFrame.show()
+  })
+
+  emitter.once('rolling-dog:keyframe-2313', () => {
+    rollingDogLeftInsideFrame.show()
+  })
+
+  emitter.once('rolling-dog:keyframe-2317', () => {
+    rollingDogLeftOutsideFrame.show()
+  })
+
+  emitter.once('rolling-dog:keyframe-2405', () => {
+    rollingDogRightOutsideFrame.show()
   })
 
   emitter.once('clapping-yuki-peeking-pigeon:keyframe-69', () => {
@@ -593,7 +636,27 @@ export function initializeWindows() {
       emitter.emit('walking-dog:keyframe-14')
     }
     // Rolling dog
-    if (frame >= 990) {
+    if (frame >= 2405) {
+      emitter.emit('rolling-dog:keyframe-2405')
+    } else if (frame >= 2317) {
+      emitter.emit('rolling-dog:keyframe-2317')
+    } else if (frame >= 2313) {
+      emitter.emit('rolling-dog:keyframe-2313')
+    } else if (frame >= 2309) {
+      emitter.emit('rolling-dog:keyframe-2309')
+    } else if (frame >= 2305) {
+      emitter.emit('rolling-dog:keyframe-2305')
+    } else if (frame >= 1997) {
+      emitter.emit('rolling-dog:keyframe-1997')
+    } else if (frame >= 1993) {
+      emitter.emit('rolling-dog:keyframe-1993')
+    } else if (frame >= 1989) {
+      emitter.emit('rolling-dog:keyframe-1989')
+    } else if (frame >= 1395) {
+      emitter.emit('rolling-dog:keyframe-1395')
+    } else if (frame >= 1391) {
+      emitter.emit('rolling-dog:keyframe-1391')
+    } else if (frame >= 990) {
       emitter.emit('rolling-dog:keyframe-990')
     } else if (frame >= 811) {
       emitter.emit('rolling-dog:keyframe-811')

@@ -61,17 +61,97 @@ worldBridge.keyframes.once('keyframe-from-990', () => {
   worldBridge.toggleVisibility(false)
 })
 
+worldBridge.keyframes.once('keyframe-from-1391', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-from-1395', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-from-1989', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-from-1993', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-from-1997', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-from-2305', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-from-2309', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-from-2313', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-from-2317', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+worldBridge.keyframes.once('keyframe-2405', () => {
+  new Notification('风力实在是太强了！', {
+    body: '我整条狗都快被吹飞了！',
+    icon: cross,
+  })
+})
+
+worldBridge.keyframes.once('keyframe-from-2405', () => {
+  worldBridge.toggleVisibility(false)
+})
+
+const keyframes = worldBridge.params as number[]
+
 worldBridge.onPlay(frame => {
   // Also see src/main/window.ts
-  if (frame >= 990) {
+  if (frame >= 2405 && keyframes.includes(2405)) {
+    worldBridge.keyframes.emit('keyframe-2405')
+    startFrame = 2405
+    lastPosition = 1400
+  } else if (frame >= 2317 && keyframes.includes(2317)) {
+    startFrame = 2317
+    lastPosition = 1000
+  } else if (frame >= 2313 && keyframes.includes(2313)) {
+    startFrame = 2313
+    lastPosition = 1000
+  } else if (frame >= 2309 && keyframes.includes(2309)) {
+    startFrame = 2309
+    lastPosition = 1000
+  } else if (frame >= 2305 && keyframes.includes(2305)) {
+    startFrame = 2305
+    lastPosition = 1000
+  } else if (frame >= 1997 && keyframes.includes(1997)) {
+    startFrame = 1997
+    lastPosition = 1000
+  } else if (frame >= 1993 && keyframes.includes(1993)) {
+    startFrame = 1993
+    lastPosition = 1000
+  } else if (frame >= 1989 && keyframes.includes(1989)) {
+    startFrame = 1989
+    lastPosition = 1000
+  } else if (frame >= 1395 && keyframes.includes(1395)) {
+    startFrame = 1395
+    lastPosition = 1000
+  } else if (frame >= 1391 && keyframes.includes(1391)) {
+    startFrame = 1391
+    lastPosition = 1000
+  } else if (frame >= 990 && keyframes.includes(990)) {
     worldBridge.keyframes.emit('keyframe-990')
     startFrame = 990
     lastPosition = 1450
-  } else if (frame >= 811) {
+  } else if (frame >= 811 && keyframes.includes(811)) {
     worldBridge.keyframes.emit('keyframe-811')
     startFrame = 811
     lastPosition = 1450
-  } else if (frame >= 172) {
+  } else if (frame >= 172 && keyframes.includes(172)) {
     startFrame = 172
     lastPosition = 1000
   }
@@ -95,6 +175,26 @@ worldBridge.onPlay(frame => {
       worldBridge.keyframes.emit('keyframe-from-811')
     } else if (startFrame === 990) {
       worldBridge.keyframes.emit('keyframe-from-990')
+    } else if (startFrame === 1391) {
+      worldBridge.keyframes.emit('keyframe-from-1391')
+    } else if (startFrame === 1395) {
+      worldBridge.keyframes.emit('keyframe-from-1395')
+    } else if (startFrame === 1989) {
+      worldBridge.keyframes.emit('keyframe-from-1989')
+    } else if (startFrame === 1993) {
+      worldBridge.keyframes.emit('keyframe-from-1993')
+    } else if (startFrame === 1997) {
+      worldBridge.keyframes.emit('keyframe-from-1997')
+    } else if (startFrame === 2305) {
+      worldBridge.keyframes.emit('keyframe-from-2305')
+    } else if (startFrame === 2309) {
+      worldBridge.keyframes.emit('keyframe-from-2309')
+    } else if (startFrame === 2313) {
+      worldBridge.keyframes.emit('keyframe-from-2313')
+    } else if (startFrame === 2317) {
+      worldBridge.keyframes.emit('keyframe-from-2317')
+    } else if (startFrame === 2405) {
+      worldBridge.keyframes.emit('keyframe-from-2405')
     }
   }
 })
