@@ -5,6 +5,7 @@ import BlackBirdFrame from './BlackBirdFrame.vue'
 import ClappingYukiFrame from './ClappingYukiFrame.vue'
 import ErrorFrame from './ErrorFrame.vue'
 import FightingFrame from './FightingFrame.vue'
+import HugeBlowingYukiFrame from './HugeBlowingYukiFrame.vue'
 import JumpingYukiFrame from './JumpingYukiFrame.vue'
 import MainFrame from './MainFrame.vue'
 import PeekingPigeonFrame from './PeekingPigeonFrame.vue'
@@ -50,6 +51,8 @@ function getCurrentComponent() {
       return ErrorFrame
     case 'waving-bird-frame':
       return WavingBirdFrame
+    case 'huge-blowing-yuki-frame':
+      return HugeBlowingYukiFrame
   }
 }
 

@@ -292,6 +292,16 @@ function createWavingBirdFrame(mainFrame: BrowserWindow, params?: unknown) {
   }, params)
 }
 
+function createHugeBlowingYukiFrame(mainFrame: BrowserWindow) {
+  return createWindow('huge-blowing-yuki-frame', {
+    parent: mainFrame,
+    title: '汽笛',
+    width: 1286,
+    height: 724,
+    focusable: false,
+  })
+}
+
 function showWavingBirdFrame(
   frame: BrowserWindow,
   offsetX: number,
@@ -343,6 +353,7 @@ export function initializeWindows() {
   const staticPigeonRightOutsideFrame = createStaticPigeonFrame(mainFrame, 450, 'white')
   const fightingFrame = createFightingFrame(mainFrame)
   const ahhhhFrame = createAhhhhFrame(mainFrame)
+  const errorFrames = Array.from({ length: 6 }, (_, index) => createErrorFrame(mainFrame, index))
   const wavingBirdLeftOutsideFrame = createWavingBirdFrame(mainFrame)
   const wavingBirdLeftMiddleFrame = createWavingBirdFrame(mainFrame)
   const wavingBirdLeftInsideFrame = createWavingBirdFrame(mainFrame)
@@ -350,7 +361,7 @@ export function initializeWindows() {
   const wavingBirdRightInsideFrame = createWavingBirdFrame(mainFrame, 'white')
   const wavingBirdRightMiddleFrame = createWavingBirdFrame(mainFrame, 'white')
   const wavingBirdRightOutsideFrame = createWavingBirdFrame(mainFrame, 'white')
-  const errorFrames = Array.from({ length: 6 }, (_, index) => createErrorFrame(mainFrame, index))
+  const hugeBlowingYukiFrame = createHugeBlowingYukiFrame(mainFrame)
 
   const whenReady = Promise.all(
     BrowserWindow.getAllWindows().map(frame => new Promise<void>(resolve => {
@@ -673,6 +684,10 @@ export function initializeWindows() {
     showWavingBirdFrame(wavingBirdLeftInsideFrame, 360)
   })
 
+  emitter.once('huge-blowing-yuki:keyframe-1808', () => {
+    hugeBlowingYukiFrame.show()
+  })
+
   const sleep = (timeout: number) => new Promise(resolve => setTimeout(resolve, timeout))
 
   emitter.once('ahhhh-error:keyframe-1214', async () => {
@@ -848,6 +863,10 @@ export function initializeWindows() {
       emitter.emit('waving-bird:keyframe-2099')
     } else if (frame >= 1685) {
       emitter.emit('waving-bird:keyframe-1685')
+    }
+    // Huge blowing Yuki
+    if (frame >= 1808) {
+      emitter.emit('huge-blowing-yuki:keyframe-1808')
     }
     broadcast('play', frame, frameInterval)
   })
