@@ -540,6 +540,42 @@ export function initializeWindows() {
     staticYukiRightFrame.show()
   })
 
+  emitter.once('static-yuki:keyframe-1452', () => {
+    staticYukiLeftFrame.show()
+  })
+
+  emitter.once('static-yuki:keyframe-1462', () => {
+    staticYukiCenterFrame.show()
+  })
+
+  emitter.once('static-yuki:keyframe-1472', () => {
+    staticYukiRightFrame.show()
+  })
+
+  emitter.once('static-yuki:keyframe-2061', () => {
+    staticYukiLeftFrame.show()
+  })
+
+  emitter.once('static-yuki:keyframe-2071', () => {
+    staticYukiCenterFrame.show()
+  })
+
+  emitter.once('static-yuki:keyframe-2081', () => {
+    staticYukiRightFrame.show()
+  })
+
+  emitter.once('static-yuki:keyframe-2368', () => {
+    staticYukiLeftFrame.show()
+  })
+
+  emitter.once('static-yuki:keyframe-2378', () => {
+    staticYukiCenterFrame.show()
+  })
+
+  emitter.once('static-yuki:keyframe-2388', () => {
+    staticYukiRightFrame.show()
+  })
+
   emitter.once('black-bird-white-bird:keyframe-315', () => {
     blackBirdFrame.show()
     whiteBirdFrame.show()
@@ -686,7 +722,25 @@ export function initializeWindows() {
       emitter.emit('clapping-yuki-peeking-pigeon:keyframe-69')
     }
     // Static Yuki
-    if (frame >= 254) {
+    if (frame >= 2388) {
+      emitter.emit('static-yuki:keyframe-2081')
+    } else if (frame >= 2378) {
+      emitter.emit('static-yuki:keyframe-2071')
+    } else if (frame >= 2368) {
+      emitter.emit('static-yuki:keyframe-2061')
+    } else if (frame >= 2081) {
+      emitter.emit('static-yuki:keyframe-2081')
+    } else if (frame >= 2071) {
+      emitter.emit('static-yuki:keyframe-2071')
+    } else if (frame >= 2061) {
+      emitter.emit('static-yuki:keyframe-2061')
+    } else if (frame >= 1472) {
+      emitter.emit('static-yuki:keyframe-1472')
+    } else if (frame >= 1462) {
+      emitter.emit('static-yuki:keyframe-1462')
+    } else if (frame >= 1452) {
+      emitter.emit('static-yuki:keyframe-1452')
+    } else if (frame >= 254) {
       emitter.emit('static-yuki:keyframe-254')
     } else if (frame >= 244) {
       emitter.emit('static-yuki:keyframe-244')
