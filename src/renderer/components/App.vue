@@ -13,6 +13,7 @@ import StaticPigeonFrame from './StaticPigeonFrame.vue'
 import StaticYukiFrame from './StaticYukiFrame.vue'
 import WalkingDogFrame from './WalkingDogFrame.vue'
 import WalkingYukiFrame from './WalkingYukiFrame.vue'
+import WavingBirdFrame from './WavingBirdFrame.vue'
 import WhiteBirdFrame from './WhiteBirdFrame.vue'
 
 function getCurrentComponent() {
@@ -47,6 +48,8 @@ function getCurrentComponent() {
       return AhhhhFrame
     case 'error-frame':
       return ErrorFrame
+    case 'waving-bird-frame':
+      return WavingBirdFrame
   }
 }
 

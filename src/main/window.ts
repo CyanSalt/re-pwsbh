@@ -60,10 +60,8 @@ function showWalkingDogFrame(
   const mainFrame = frame.getParentWindow()
   if (!mainFrame) return
   const screenSize = screen.getDisplayMatching(mainFrame.getBounds()).workAreaSize
-  const windowSize = {
-    width: 152,
-    height: 126,
-  }
+  const [width, height] = frame.getContentSize()
+  const windowSize = { width, height }
   frame.setPosition(
     Math.round((screenSize.width - windowSize.width) / 2) + offsetX,
     Math.round((screenSize.height - windowSize.height) / 2) + 200,
@@ -278,6 +276,38 @@ function createErrorFrame(mainFrame: BrowserWindow, index: number) {
   })
 }
 
+function createWavingBirdFrame(mainFrame: BrowserWindow, params?: unknown) {
+  const screenSize = screen.getDisplayMatching(mainFrame.getBounds()).workAreaSize
+  const windowSize = {
+    width: 172,
+    height: 159,
+  }
+  return createWindow('waving-bird-frame', {
+    parent: mainFrame,
+    title: '',
+    ...windowSize,
+    x: Math.round((screenSize.width - windowSize.width) / 2),
+    y: Math.round((screenSize.height - windowSize.height) / 2) + 240,
+    focusable: false,
+  }, params)
+}
+
+function showWavingBirdFrame(
+  frame: BrowserWindow,
+  offsetX: number,
+) {
+  const mainFrame = frame.getParentWindow()
+  if (!mainFrame) return
+  const screenSize = screen.getDisplayMatching(mainFrame.getBounds()).workAreaSize
+  const [width, height] = frame.getContentSize()
+  const windowSize = { width, height }
+  frame.setPosition(
+    Math.round((screenSize.width - windowSize.width) / 2) + offsetX,
+    Math.round((screenSize.height - windowSize.height) / 2) + 240,
+  )
+  frame.show()
+}
+
 function loop(fn: Parameters<typeof raf>[0]) {
   raf(timestamp => {
     fn(timestamp)
@@ -307,12 +337,19 @@ export function initializeWindows() {
   const blackBirdFrame = createBlackBirdFrame(mainFrame)
   const whiteBirdFrame = createWhiteBirdFrame(mainFrame)
   const walkingYukiFrame = createWalkingYukiFrame(mainFrame)
-  const staticPigeonLeftOutSideFrame = createStaticPigeonFrame(mainFrame, -450)
-  const staticPigeonLeftInSideFrame = createStaticPigeonFrame(mainFrame, -150)
-  const staticPigeonRightInSideFrame = createStaticPigeonFrame(mainFrame, 150)
-  const staticPigeonRightOutSideFrame = createStaticPigeonFrame(mainFrame, 450, 'white')
+  const staticPigeonLeftOutsideFrame = createStaticPigeonFrame(mainFrame, -450)
+  const staticPigeonLeftInsideFrame = createStaticPigeonFrame(mainFrame, -150)
+  const staticPigeonRightInsideFrame = createStaticPigeonFrame(mainFrame, 150)
+  const staticPigeonRightOutsideFrame = createStaticPigeonFrame(mainFrame, 450, 'white')
   const fightingFrame = createFightingFrame(mainFrame)
   const ahhhhFrame = createAhhhhFrame(mainFrame)
+  const wavingBirdLeftOutsideFrame = createWavingBirdFrame(mainFrame)
+  const wavingBirdLeftMiddleFrame = createWavingBirdFrame(mainFrame)
+  const wavingBirdLeftInsideFrame = createWavingBirdFrame(mainFrame)
+  const wavingBirdCenterFrame = createWavingBirdFrame(mainFrame)
+  const wavingBirdRightInsideFrame = createWavingBirdFrame(mainFrame, 'white')
+  const wavingBirdRightMiddleFrame = createWavingBirdFrame(mainFrame, 'white')
+  const wavingBirdRightOutsideFrame = createWavingBirdFrame(mainFrame, 'white')
   const errorFrames = Array.from({ length: 6 }, (_, index) => createErrorFrame(mainFrame, index))
 
   const whenReady = Promise.all(
@@ -587,19 +624,19 @@ export function initializeWindows() {
   })
 
   emitter.once('static-pigeon:keyframe-1149', () => {
-    staticPigeonLeftOutSideFrame.show()
+    staticPigeonLeftOutsideFrame.show()
   })
 
   emitter.once('static-pigeon:keyframe-1158', () => {
-    staticPigeonLeftInSideFrame.show()
+    staticPigeonLeftInsideFrame.show()
   })
 
   emitter.once('static-pigeon:keyframe-1167', () => {
-    staticPigeonRightInSideFrame.show()
+    staticPigeonRightInsideFrame.show()
   })
 
   emitter.once('static-pigeon:keyframe-1176', () => {
-    staticPigeonRightOutSideFrame.show()
+    staticPigeonRightOutsideFrame.show()
   })
 
   emitter.once('fighting:keyframe-1184', () => {
@@ -608,6 +645,32 @@ export function initializeWindows() {
 
   emitter.once('ahhhh-error:keyframe-1212', () => {
     ahhhhFrame.show()
+  })
+
+  emitter.once('waving-bird:keyframe-1685', () => {
+    showWavingBirdFrame(wavingBirdLeftOutsideFrame, -480)
+    showWavingBirdFrame(wavingBirdLeftMiddleFrame, -320)
+    showWavingBirdFrame(wavingBirdLeftInsideFrame, -160)
+    showWavingBirdFrame(wavingBirdRightInsideFrame, 160)
+    showWavingBirdFrame(wavingBirdRightMiddleFrame, 320)
+    showWavingBirdFrame(wavingBirdRightOutsideFrame, 480)
+  })
+
+  emitter.once('waving-bird:keyframe-2099', () => {
+    showWavingBirdFrame(wavingBirdRightInsideFrame, -300)
+    showWavingBirdFrame(wavingBirdLeftOutsideFrame, -100)
+    showWavingBirdFrame(wavingBirdRightOutsideFrame, 100)
+    showWavingBirdFrame(wavingBirdLeftInsideFrame, 300)
+  })
+
+  emitter.once('waving-bird:keyframe-2439', () => {
+    showWavingBirdFrame(wavingBirdLeftOutsideFrame, -360)
+    showWavingBirdFrame(wavingBirdRightInsideFrame, -240)
+    showWavingBirdFrame(wavingBirdLeftMiddleFrame, -120)
+    showWavingBirdFrame(wavingBirdRightMiddleFrame, 0)
+    showWavingBirdFrame(wavingBirdCenterFrame, 120)
+    showWavingBirdFrame(wavingBirdRightOutsideFrame, 240)
+    showWavingBirdFrame(wavingBirdLeftInsideFrame, 360)
   })
 
   const sleep = (timeout: number) => new Promise(resolve => setTimeout(resolve, timeout))
@@ -777,6 +840,14 @@ export function initializeWindows() {
       emitter.emit('ahhhh-error:keyframe-1214')
     } else if (frame >= 1212) {
       emitter.emit('ahhhh-error:keyframe-1212')
+    }
+    // Waving birds
+    if (frame >= 2439) {
+      emitter.emit('waving-bird:keyframe-2439')
+    } else if (frame >= 2099) {
+      emitter.emit('waving-bird:keyframe-2099')
+    } else if (frame >= 1685) {
+      emitter.emit('waving-bird:keyframe-1685')
     }
     broadcast('play', frame, frameInterval)
   })
