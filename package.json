@@ -9,7 +9,7 @@
     "dev": "node build/build.mjs && electron .",
     "build": "node build/build.mjs && node build/pack.mjs -- --local",
     "pack": "node build/build.mjs && node build/pack.mjs",
-    "release": "dotenv release-it --",
+    "release": "release-it",
     "lint:script": "eslint --ignore-path .gitignore --ext .js,.cjs,.mjs,.ts,.vue --cache --fix .",
     "lint:style": "stylelint --ignore-path .gitignore --cache --fix ./**/*.{css,scss,vue}",
     "lint": "npm run lint:script && npm run lint:style"
@@ -40,7 +40,6 @@
     "@types/raf": "^3.4.2",
     "@vitejs/plugin-vue": "^4.4.0",
     "@vue-macros/reactivity-transform": "^0.3.23",
-    "dotenv-cli": "^7.3.0",
     "electron": "^27.0.2",
     "electron-packager": "^17.1.2",
     "esbuild": "^0.19.5",
