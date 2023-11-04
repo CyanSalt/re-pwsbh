@@ -30,6 +30,8 @@ function createWindow(name: string, options?: Partial<BrowserWindowConstructorOp
   const frame = new BrowserWindow({
     useContentSize: true,
     show: false,
+    focusable: false,
+    backgroundColor: options?.frame === false ? undefined : '#fed851',
     ...options,
     width,
     height,
@@ -74,6 +76,7 @@ function createMainFrame() {
     title: '背景呐',
     width: 1104,
     height: 537,
+    focusable: true,
   })
 }
 
@@ -83,7 +86,6 @@ function createJumpingYukiFrame(mainFrame: BrowserWindow) {
     title: '小雪',
     width: 240,
     height: 578,
-    focusable: false,
   })
 }
 
@@ -99,7 +101,6 @@ function createWalkingDogFrame(mainFrame: BrowserWindow) {
     ...windowSize,
     x: Math.round((screenSize.width - windowSize.width) / 2),
     y: Math.round((screenSize.height - windowSize.height) / 2) + 200,
-    focusable: false,
   })
 }
 
@@ -115,7 +116,6 @@ function createRollingDogFrame(mainFrame: BrowserWindow, keyframes: number[]) {
     ...windowSize,
     x: Math.round((screenSize.width - windowSize.width) / 2) - 300,
     y: screenSize.height - windowSize.height - 30,
-    focusable: false,
   }, keyframes)
 }
 
@@ -128,7 +128,6 @@ function createClappingYukiFrame(mainFrame: BrowserWindow) {
     height: 302,
     x: screenSize.width,
     y: screenSize.height,
-    focusable: false,
   })
 }
 
@@ -141,7 +140,6 @@ function createPeekingPigeonFrame(mainFrame: BrowserWindow) {
     height: 242,
     x: 274,
     y: screenSize.height,
-    focusable: false,
   })
 }
 
@@ -157,7 +155,6 @@ function createStaticYukiFrame(mainFrame: BrowserWindow, offsetX: number) {
     ...windowSize,
     x: Math.round((screenSize.width - windowSize.width) / 2) + offsetX,
     y: Math.round((screenSize.height - windowSize.height) / 2),
-    focusable: false,
   })
 }
 
@@ -173,7 +170,6 @@ function createBlackBirdFrame(mainFrame: BrowserWindow) {
     ...windowSize,
     x: Math.round((screenSize.width - windowSize.width) / 2) - 500,
     y: Math.round(screenSize.height / 2) - windowSize.height + 400,
-    focusable: false,
   })
 }
 
@@ -189,7 +185,6 @@ function createWhiteBirdFrame(mainFrame: BrowserWindow) {
     ...windowSize,
     x: Math.round((screenSize.width - windowSize.width) / 2) + 500,
     y: Math.round(screenSize.height / 2) - windowSize.height + 400,
-    focusable: false,
   })
 }
 
@@ -205,7 +200,6 @@ function createWalkingYukiFrame(mainFrame: BrowserWindow) {
     ...windowSize,
     x: screenSize.width - windowSize.width,
     y: Math.round((screenSize.height - windowSize.height) / 2),
-    focusable: false,
   })
 }
 
@@ -221,7 +215,6 @@ function createStaticPigeonFrame(mainFrame: BrowserWindow, offsetX: number, para
     ...windowSize,
     x: Math.round((screenSize.width - windowSize.width) / 2) + offsetX,
     y: Math.round((screenSize.height - windowSize.height) / 2) + 100,
-    focusable: false,
   }, params)
 }
 
@@ -231,7 +224,6 @@ function createFightingFrame(mainFrame: BrowserWindow) {
     title: '',
     width: 1189,
     height: 668,
-    focusable: false,
   })
 }
 
@@ -247,7 +239,6 @@ function createAhhhhFrame(mainFrame: BrowserWindow) {
     ...windowSize,
     x: Math.round(screenSize.width / 2),
     y: Math.round((screenSize.height - windowSize.height) / 2) + 100,
-    focusable: false,
   })
 }
 
@@ -264,7 +255,6 @@ function createErrorFrame(mainFrame: BrowserWindow, index: number) {
     x: Math.round(screenSize.width / 2) - index * 40,
     y: Math.round((screenSize.height - windowSize.height) / 2) + index * 30,
     frame: false,
-    focusable: false,
   })
 }
 
@@ -280,7 +270,6 @@ function createWavingBirdFrame(mainFrame: BrowserWindow, params?: unknown) {
     ...windowSize,
     x: Math.round((screenSize.width - windowSize.width) / 2),
     y: Math.round((screenSize.height - windowSize.height) / 2) + 240,
-    focusable: false,
   }, params)
 }
 
@@ -290,7 +279,6 @@ function createHugeBlowingYukiFrame(mainFrame: BrowserWindow) {
     title: '汽笛',
     width: 1286,
     height: 724,
-    focusable: false,
   })
 }
 
@@ -307,7 +295,6 @@ function createBlackWhiteYukiFrame(mainFrame: BrowserWindow, magicNumber: number
     ...windowSize,
     x: Math.round((screenSize.width - windowSize.width) / 2) + 400 + Math.floor(magicNumber * maxOffsetX),
     y: Math.round((screenSize.height - windowSize.height) / 2) + Math.floor(Math.sin(magicNumber * Math.PI * 2) * 40),
-    focusable: false,
   })
 }
 
@@ -339,7 +326,6 @@ function createCabbageFrame(mainFrame: BrowserWindow, offsetX: number, startFram
     ...windowSize,
     x: Math.round((screenSize.width - windowSize.width) / 2 + offsetX),
     y: Math.round((screenSize.height - windowSize.height) / 2),
-    focusable: false,
   }, startFrame)
 }
 
@@ -353,7 +339,6 @@ function createCuttingYukiFrame(mainFrame: BrowserWindow) {
     frame: false,
     transparent: true,
     hasShadow: false,
-    focusable: false,
   })
 }
 
