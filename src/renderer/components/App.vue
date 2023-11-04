@@ -5,6 +5,7 @@ import BlackBirdFrame from './BlackBirdFrame.vue'
 import BlackWhiteYukiFrame from './BlackWhiteYukiFrame.vue'
 import CabbageFrame from './CabbageFrame.vue'
 import ClappingYukiFrame from './ClappingYukiFrame.vue'
+import CuttingYukiFrame from './CuttingYukiFrame.vue'
 import ErrorFrame from './ErrorFrame.vue'
 import FightingFrame from './FightingFrame.vue'
 import HugeBlowingYukiFrame from './HugeBlowingYukiFrame.vue'
@@ -59,6 +60,8 @@ function getCurrentComponent() {
       return BlackWhiteYukiFrame
     case 'cabbage-frame':
       return CabbageFrame
+    case 'cutting-yuki-frame':
+      return CuttingYukiFrame
   }
 }
 

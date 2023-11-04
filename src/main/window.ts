@@ -273,6 +273,7 @@ function createErrorFrame(mainFrame: BrowserWindow, index: number) {
     x: Math.round(screenSize.width / 2) - index * 40,
     y: Math.round((screenSize.height - windowSize.height) / 2) + index * 30,
     frame: false,
+    focusable: false,
   })
 }
 
@@ -351,6 +352,20 @@ function createCabbageFrame(mainFrame: BrowserWindow, offsetX: number, startFram
   }, startFrame)
 }
 
+function createCuttingYukiFrame(mainFrame: BrowserWindow) {
+  return createWindow('cutting-yuki-frame', {
+    parent: mainFrame,
+    title: '',
+    width: 185,
+    height: 178,
+    alwaysOnTop: true,
+    frame: false,
+    transparent: true,
+    hasShadow: false,
+    focusable: false,
+  })
+}
+
 function loop(fn: Parameters<typeof raf>[0]) {
   raf(timestamp => {
     fn(timestamp)
@@ -412,6 +427,7 @@ export function initializeWindows() {
   const cabbage8Frame = createCabbageFrame(mainFrame, -180, 1650)
   const cabbage9Frame = createCabbageFrame(mainFrame, 180, 1660)
   const cabbage10Frame = createCabbageFrame(mainFrame, 0, 1670)
+  const cuttingYukiFrame = createCuttingYukiFrame(mainFrame)
 
   const whenReady = Promise.all(
     BrowserWindow.getAllWindows().map(frame => new Promise<void>(resolve => {
@@ -842,6 +858,25 @@ export function initializeWindows() {
     cabbage10Frame.show()
   })
 
+  emitter.once('cabbage:keyframe-1670', () => {
+    cabbage10Frame.show()
+  })
+
+  emitter.once('cutting-yuki:keyframe-1527', () => {
+    cuttingYukiFrame.show()
+  })
+
+  emitter.on('cutting-yuki:move', () => {
+    const cursor = screen.getCursorScreenPoint()
+    const [width, height] = cuttingYukiFrame.getSize()
+    const windowSize = { width, height }
+    cuttingYukiFrame.setPosition(cursor.x + 8, cursor.y - Math.round(windowSize.height / 2))
+  })
+
+  emitter.once('cutting-yuki:keyframe-1684', () => {
+    cuttingYukiFrame.hide()
+  })
+
   let startedAt = -1
 
   ipcMain.on('sync-time', (event, time: number) => {
@@ -1052,6 +1087,13 @@ export function initializeWindows() {
       emitter.emit('cabbage:keyframe-1567')
     } else if (frame >= 1535) {
       emitter.emit('cabbage:keyframe-1535')
+    }
+    // Cutting Yuki
+    if (frame >= 1684) {
+      emitter.emit('cutting-yuki:keyframe-1684')
+    } else if (frame >= 1527) {
+      emitter.emit('cutting-yuki:keyframe-1527')
+      emitter.emit('cutting-yuki:move')
     }
     broadcast('play', frame, frameInterval)
   })
