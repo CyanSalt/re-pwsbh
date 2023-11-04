@@ -16,7 +16,7 @@ const backgroundStyle = $computed(() => `url('${background}')`)
 .cutting-yuki-frame {
   background-image: v-bind('backgroundStyle');
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
 }
 .offscreen-image {

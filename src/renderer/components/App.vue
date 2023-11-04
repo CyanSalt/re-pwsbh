@@ -10,6 +10,7 @@ import ErrorFrame from './ErrorFrame.vue'
 import FightingFrame from './FightingFrame.vue'
 import HugeBlowingYukiFrame from './HugeBlowingYukiFrame.vue'
 import JumpingYukiFrame from './JumpingYukiFrame.vue'
+import LikeFrame from './LikeFrame.vue'
 import MainFrame from './MainFrame.vue'
 import PeekingPigeonFrame from './PeekingPigeonFrame.vue'
 import RollingDogFrame from './RollingDogFrame.vue'
@@ -62,6 +63,8 @@ function getCurrentComponent() {
       return CabbageFrame
     case 'cutting-yuki-frame':
       return CuttingYukiFrame
+    case 'like-frame':
+      return LikeFrame
   }
 }
 

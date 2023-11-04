@@ -342,6 +342,15 @@ function createCuttingYukiFrame(mainFrame: BrowserWindow) {
   })
 }
 
+function createLikeFrame(mainFrame: BrowserWindow) {
+  return createWindow('like-frame', {
+    parent: mainFrame,
+    title: '一键三连！',
+    width: 955,
+    height: 585,
+  })
+}
+
 function loop(fn: Parameters<typeof raf>[0]) {
   raf(timestamp => {
     fn(timestamp)
@@ -403,6 +412,7 @@ export function initializeWindows() {
   const cabbage9Frame = createCabbageFrame(mainFrame, 180, 1660)
   const cabbage10Frame = createCabbageFrame(mainFrame, 0, 1670)
   const cuttingYukiFrame = createCuttingYukiFrame(mainFrame)
+  const likeFrame = createLikeFrame(mainFrame)
 
   const whenReady = Promise.all(
     BrowserWindow.getAllWindows().map(frame => new Promise<void>(resolve => {
@@ -848,6 +858,14 @@ export function initializeWindows() {
     cuttingYukiFrame.hide()
   })
 
+  emitter.once('like:keyframe-2508', () => {
+    likeFrame.show()
+  })
+
+  emitter.once('like:keyframe-2520', () => {
+    likeFrame.hide()
+  })
+
   let startedAt = -1
 
   ipcMain.on('sync-time', (event, time: number) => {
@@ -1065,6 +1083,12 @@ export function initializeWindows() {
     } else if (frame >= 1527) {
       emitter.emit('cutting-yuki:keyframe-1527')
       emitter.emit('cutting-yuki:move')
+    }
+    // Like
+    if (frame >= 2520) {
+      emitter.emit('like:keyframe-2520')
+    } else if (frame >= 2508) {
+      emitter.emit('like:keyframe-2508')
     }
     broadcast('play', frame, frameInterval)
   })
