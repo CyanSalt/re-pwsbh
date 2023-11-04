@@ -674,12 +674,38 @@ export function initializeWindows() {
     staticPigeonWhiteFrame.show()
   })
 
+  emitter.once('static-pigeon:keyframe-1184', () => {
+    staticPigeonGrey1Frame.hide()
+    staticPigeonGrey2Frame.hide()
+    staticPigeonGrey3Frame.hide()
+    staticPigeonWhiteFrame.hide()
+  })
+
   emitter.once('fighting:keyframe-1184', () => {
     fightingFrame.show()
   })
 
-  emitter.once('ahhhh-error:keyframe-1212', () => {
+  emitter.once('ahhhh:keyframe-1212', () => {
     ahhhhFrame.show()
+  })
+
+  emitter.once('ahhhh:keyframe-1226', () => {
+    ahhhhFrame.hide()
+  })
+
+  const sleep = (timeout: number) => new Promise(resolve => setTimeout(resolve, timeout))
+
+  emitter.once('error:keyframe-1214', async () => {
+    for (const frame of errorFrames) {
+      frame.show()
+      await sleep(70)
+    }
+  })
+
+  emitter.once('error:keyframe-1246', () => {
+    errorFrames.forEach(frame => {
+      frame.hide()
+    })
   })
 
   emitter.once('waving-bird:keyframe-1685', () => {
@@ -748,22 +774,6 @@ export function initializeWindows() {
     blackWhiteYuki5Frame.hide()
     blackWhiteYuki6Frame.hide()
     blackWhiteYuki7Frame.hide()
-  })
-
-
-  const sleep = (timeout: number) => new Promise(resolve => setTimeout(resolve, timeout))
-
-  emitter.once('ahhhh-error:keyframe-1214', async () => {
-    for (const frame of errorFrames) {
-      frame.show()
-      await sleep(70)
-    }
-  })
-
-  emitter.once('ahhhh-error:keyframe-1246', () => {
-    errorFrames.forEach(frame => {
-      frame.hide()
-    })
   })
 
   let startedAt = -1
@@ -898,7 +908,9 @@ export function initializeWindows() {
       emitter.emit('walking-yuki:keyframe-619')
     }
     // Static pigeons
-    if (frame >= 1176) {
+    if (frame >= 1184) {
+      emitter.emit('static-pigeon:keyframe-1184')
+    } else if (frame >= 1176) {
       emitter.emit('static-pigeon:keyframe-1176')
     } else if (frame >= 1167) {
       emitter.emit('static-pigeon:keyframe-1167')
@@ -911,13 +923,17 @@ export function initializeWindows() {
     if (frame >= 1184) {
       emitter.emit('fighting:keyframe-1184')
     }
-    // Ahhhh and errors
-    if (frame >= 1246) {
-      emitter.emit('ahhhh-error:keyframe-1246')
-    } else if (frame >= 1214) {
-      emitter.emit('ahhhh-error:keyframe-1214')
+    // Ahhhh
+    if (frame >= 1226) {
+      emitter.emit('ahhhh:keyframe-1226')
     } else if (frame >= 1212) {
-      emitter.emit('ahhhh-error:keyframe-1212')
+      emitter.emit('ahhhh:keyframe-1212')
+    }
+    // Errors
+    if (frame >= 1246) {
+      emitter.emit('error:keyframe-1246')
+    } else if (frame >= 1214) {
+      emitter.emit('error:keyframe-1214')
     }
     // Waving birds
     if (frame >= 2439) {

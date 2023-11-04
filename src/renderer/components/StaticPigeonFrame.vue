@@ -5,16 +5,6 @@ import whitePigeon from '../assets/white-pigeon.png'
 const background = worldBridge.params === 'white' ? whitePigeon : greyPigeon
 
 const backgroundStyle = $computed(() => `url('${background}')`)
-
-worldBridge.keyframes.once('keyframe-1184', () => {
-  worldBridge.toggleVisibility(false)
-})
-
-worldBridge.onPlay(frame => {
-  if (frame >= 1184) {
-    worldBridge.keyframes.emit('keyframe-1184')
-  }
-})
 </script>
 
 <template>

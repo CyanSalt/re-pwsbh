@@ -4,16 +4,6 @@ import ahhhh from '../assets/ahhhh.png'
 let background = $ref(ahhhh)
 
 const backgroundStyle = $computed(() => `url('${background}')`)
-
-worldBridge.keyframes.once('keyframe-1226', () => {
-  worldBridge.toggleVisibility(false)
-})
-
-worldBridge.onPlay(frame => {
-  if (frame >= 1226) {
-    worldBridge.keyframes.emit('keyframe-1226')
-  }
-})
 </script>
 
 <template>
