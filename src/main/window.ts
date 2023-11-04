@@ -4,7 +4,7 @@ import type { BrowserWindowConstructorOptions } from 'electron'
 import { BrowserWindow, ipcMain, screen } from 'electron'
 import raf from 'raf'
 
-// The larger this value is, the slower the background will be played
+// The larger this value is, the slower the background text will be played
 const frameInterval = 30 + 50 / 3 // TODO: wtf?
 
 function broadcast(event: string, ...args: any[]) {
@@ -71,18 +71,9 @@ function showWalkingDogFrame(
 
 function createMainFrame() {
   return createWindow('main-frame', {
-    width: 312,
-    height: 144,
-  })
-}
-
-function createBackgroundFrame(mainFrame: BrowserWindow) {
-  return createWindow('background-frame', {
-    parent: mainFrame,
     title: '背景呐',
     width: 1104,
     height: 537,
-    focusable: false,
   })
 }
 
@@ -375,7 +366,6 @@ function loop(fn: Parameters<typeof raf>[0]) {
 
 export function initializeWindows() {
   const mainFrame = createMainFrame()
-  const backgroundFrame = createBackgroundFrame(mainFrame)
   const jumpingYukiFrame = createJumpingYukiFrame(mainFrame)
   const walkingDog1Frame = createWalkingDogFrame(mainFrame)
   const walkingDog2Frame = createWalkingDogFrame(mainFrame)
@@ -442,10 +432,6 @@ export function initializeWindows() {
   })
 
   const emitter = new EventEmitter()
-
-  emitter.once('background:keyframe-0', () => {
-    backgroundFrame.show()
-  })
 
   emitter.once('jumping-yuki:keyframe-9', () => {
     jumpingYukiFrame.show()
