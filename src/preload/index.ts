@@ -51,6 +51,9 @@ const worldBridge: WorldBridge = {
   toggleVisibility(value) {
     ipcRenderer.send('toggle-visibility', value)
   },
+  setOpacity(value) {
+    ipcRenderer.send('set-opacity', value)
+  },
   log(value) {
     ipcRenderer.send('log', value)
   },

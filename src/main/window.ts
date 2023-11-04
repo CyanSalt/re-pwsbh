@@ -335,6 +335,22 @@ function showWavingBirdFrame(
   frame.show()
 }
 
+function createCabbageFrame(mainFrame: BrowserWindow, offsetX: number, startFrame: number) {
+  const screenSize = screen.getDisplayMatching(mainFrame.getBounds()).workAreaSize
+  const windowSize = {
+    width: 306,
+    height: 207,
+  }
+  return createWindow('cabbage-frame', {
+    parent: mainFrame,
+    title: '不明绿色圆球',
+    ...windowSize,
+    x: Math.round((screenSize.width - windowSize.width) / 2 + offsetX),
+    y: Math.round((screenSize.height - windowSize.height) / 2),
+    focusable: false,
+  }, startFrame)
+}
+
 function loop(fn: Parameters<typeof raf>[0]) {
   raf(timestamp => {
     fn(timestamp)
@@ -386,6 +402,16 @@ export function initializeWindows() {
   const blackWhiteYuki5Frame = createBlackWhiteYukiFrame(mainFrame, 2 / 3)
   const blackWhiteYuki6Frame = createBlackWhiteYukiFrame(mainFrame, 5 / 6)
   const blackWhiteYuki7Frame = createBlackWhiteYukiFrame(mainFrame, 1)
+  const cabbage1Frame = createCabbageFrame(mainFrame, 0, 1535)
+  const cabbage2Frame = createCabbageFrame(mainFrame, 0, 1567)
+  const cabbage3Frame = createCabbageFrame(mainFrame, -180, 1604)
+  const cabbage4Frame = createCabbageFrame(mainFrame, -60, 1614)
+  const cabbage5Frame = createCabbageFrame(mainFrame, 60, 1624)
+  const cabbage6Frame = createCabbageFrame(mainFrame, 180, 1634)
+  const cabbage7Frame = createCabbageFrame(mainFrame, 0, 1640)
+  const cabbage8Frame = createCabbageFrame(mainFrame, -180, 1650)
+  const cabbage9Frame = createCabbageFrame(mainFrame, 180, 1660)
+  const cabbage10Frame = createCabbageFrame(mainFrame, 0, 1670)
 
   const whenReady = Promise.all(
     BrowserWindow.getAllWindows().map(frame => new Promise<void>(resolve => {
@@ -776,6 +802,46 @@ export function initializeWindows() {
     blackWhiteYuki7Frame.hide()
   })
 
+  emitter.once('cabbage:keyframe-1535', () => {
+    cabbage1Frame.show()
+  })
+
+  emitter.once('cabbage:keyframe-1567', () => {
+    cabbage2Frame.show()
+  })
+
+  emitter.once('cabbage:keyframe-1604', () => {
+    cabbage3Frame.show()
+  })
+
+  emitter.once('cabbage:keyframe-1614', () => {
+    cabbage4Frame.show()
+  })
+
+  emitter.once('cabbage:keyframe-1624', () => {
+    cabbage5Frame.show()
+  })
+
+  emitter.once('cabbage:keyframe-1634', () => {
+    cabbage6Frame.show()
+  })
+
+  emitter.once('cabbage:keyframe-1640', () => {
+    cabbage7Frame.show()
+  })
+
+  emitter.once('cabbage:keyframe-1650', () => {
+    cabbage8Frame.show()
+  })
+
+  emitter.once('cabbage:keyframe-1660', () => {
+    cabbage9Frame.show()
+  })
+
+  emitter.once('cabbage:keyframe-1670', () => {
+    cabbage10Frame.show()
+  })
+
   let startedAt = -1
 
   ipcMain.on('sync-time', (event, time: number) => {
@@ -964,6 +1030,28 @@ export function initializeWindows() {
       emitter.emit('black-white-yuki:keyframe-1840')
     } else if (frame >= 1833) {
       emitter.emit('black-white-yuki:keyframe-1833')
+    }
+    // Cabbage
+    if (frame >= 1670) {
+      emitter.emit('cabbage:keyframe-1670')
+    } else if (frame >= 1660) {
+      emitter.emit('cabbage:keyframe-1660')
+    } else if (frame >= 1650) {
+      emitter.emit('cabbage:keyframe-1650')
+    } else if (frame >= 1640) {
+      emitter.emit('cabbage:keyframe-1640')
+    } else if (frame >= 1634) {
+      emitter.emit('cabbage:keyframe-1634')
+    } else if (frame >= 1624) {
+      emitter.emit('cabbage:keyframe-1624')
+    } else if (frame >= 1614) {
+      emitter.emit('cabbage:keyframe-1614')
+    } else if (frame >= 1604) {
+      emitter.emit('cabbage:keyframe-1604')
+    } else if (frame >= 1567) {
+      emitter.emit('cabbage:keyframe-1567')
+    } else if (frame >= 1535) {
+      emitter.emit('cabbage:keyframe-1535')
     }
     broadcast('play', frame, frameInterval)
   })

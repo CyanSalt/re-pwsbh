@@ -11,5 +11,6 @@ export interface WorldBridge {
   onPlay(fn: (frame: number, interval: number) => void): void,
   moveTo(position: { x?: number, y?: number }): void,
   toggleVisibility(visibility: boolean): void,
+  setOpacity(value: number): void,
   log(message: unknown): void,
 }

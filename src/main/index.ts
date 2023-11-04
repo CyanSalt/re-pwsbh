@@ -26,6 +26,11 @@ function handleMessages() {
       frame.hide()
     }
   })
+  ipcMain.on('set-opacity', (event, value: number) => {
+    const frame = BrowserWindow.fromWebContents(event.sender)
+    if (!frame) return
+    frame.setOpacity(value)
+  })
   ipcMain.on('log', (event, value: unknown) => {
     console.log(value)
   })
