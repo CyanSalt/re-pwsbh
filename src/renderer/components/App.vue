@@ -2,6 +2,7 @@
 import AhhhhFrame from './AhhhhFrame.vue'
 import BackgroundFrame from './BackgroundFrame.vue'
 import BlackBirdFrame from './BlackBirdFrame.vue'
+import BlackWhiteYukiFrame from './BlackWhiteYukiFrame.vue'
 import ClappingYukiFrame from './ClappingYukiFrame.vue'
 import ErrorFrame from './ErrorFrame.vue'
 import FightingFrame from './FightingFrame.vue'
@@ -53,6 +54,8 @@ function getCurrentComponent() {
       return WavingBirdFrame
     case 'huge-blowing-yuki-frame':
       return HugeBlowingYukiFrame
+    case 'black-white-yuki-frame':
+      return BlackWhiteYukiFrame
   }
 }
 

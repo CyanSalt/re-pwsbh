@@ -302,6 +302,23 @@ function createHugeBlowingYukiFrame(mainFrame: BrowserWindow) {
   })
 }
 
+function createBlackWhiteYukiFrame(mainFrame: BrowserWindow, magicNumber: number) {
+  const screenSize = screen.getDisplayMatching(mainFrame.getBounds()).workAreaSize
+  const windowSize = {
+    width: 254,
+    height: 595,
+  }
+  const maxOffsetX = 400
+  return createWindow('black-white-yuki-frame', {
+    parent: mainFrame,
+    title: '',
+    ...windowSize,
+    x: Math.round((screenSize.width - windowSize.width) / 2) + 400 + Math.floor(magicNumber * maxOffsetX),
+    y: Math.round((screenSize.height - windowSize.height) / 2) + Math.floor(Math.sin(magicNumber * Math.PI * 2) * 40),
+    focusable: false,
+  })
+}
+
 function showWavingBirdFrame(
   frame: BrowserWindow,
   offsetX: number,
@@ -329,39 +346,46 @@ export function initializeWindows() {
   const mainFrame = createMainFrame()
   const backgroundFrame = createBackgroundFrame(mainFrame)
   const jumpingYukiFrame = createJumpingYukiFrame(mainFrame)
-  const walkingDogLeftOutsideFrame = createWalkingDogFrame(mainFrame)
-  const walkingDogLeftMiddleFrame = createWalkingDogFrame(mainFrame)
-  const walkingDogLeftInsideFrame = createWalkingDogFrame(mainFrame)
-  const walkingDogRightInsideFrame = createWalkingDogFrame(mainFrame)
-  const walkingDogRightMiddleFrame = createWalkingDogFrame(mainFrame)
-  const walkingDogRightOutsideFrame = createWalkingDogFrame(mainFrame)
-  const rollingDogRightOutsideFrame = createRollingDogFrame(mainFrame, [172, 811, 990, 1391, 1989, 2305, 2405])
-  const rollingDogRightInsideFrame = createRollingDogFrame(mainFrame, [1395, 1993, 2309])
-  const rollingDogLeftInsideFrame = createRollingDogFrame(mainFrame, [1997, 2313])
-  const rollingDogLeftOutsideFrame = createRollingDogFrame(mainFrame, [2317])
+  const walkingDog1Frame = createWalkingDogFrame(mainFrame)
+  const walkingDog2Frame = createWalkingDogFrame(mainFrame)
+  const walkingDog3Frame = createWalkingDogFrame(mainFrame)
+  const walkingDog4Frame = createWalkingDogFrame(mainFrame)
+  const walkingDog5Frame = createWalkingDogFrame(mainFrame)
+  const walkingDog6Frame = createWalkingDogFrame(mainFrame)
+  const rollingDog1Frame = createRollingDogFrame(mainFrame, [172, 811, 990, 1391, 1989, 2305, 2405])
+  const rollingDog2Frame = createRollingDogFrame(mainFrame, [1395, 1993, 2309])
+  const rollingDog3Frame = createRollingDogFrame(mainFrame, [1997, 2313])
+  const rollingDog4Frame = createRollingDogFrame(mainFrame, [2317])
   const clappingYukiFrame = createClappingYukiFrame(mainFrame)
   const peekingPigeonFrame = createPeekingPigeonFrame(mainFrame)
-  const staticYukiLeftFrame = createStaticYukiFrame(mainFrame, -400)
-  const staticYukiCenterFrame = createStaticYukiFrame(mainFrame, 0)
-  const staticYukiRightFrame = createStaticYukiFrame(mainFrame, 400)
+  const staticYuki1Frame = createStaticYukiFrame(mainFrame, -400)
+  const staticYuki2Frame = createStaticYukiFrame(mainFrame, 0)
+  const staticYuki3Frame = createStaticYukiFrame(mainFrame, 400)
   const blackBirdFrame = createBlackBirdFrame(mainFrame)
   const whiteBirdFrame = createWhiteBirdFrame(mainFrame)
   const walkingYukiFrame = createWalkingYukiFrame(mainFrame)
-  const staticPigeonLeftOutsideFrame = createStaticPigeonFrame(mainFrame, -450)
-  const staticPigeonLeftInsideFrame = createStaticPigeonFrame(mainFrame, -150)
-  const staticPigeonRightInsideFrame = createStaticPigeonFrame(mainFrame, 150)
-  const staticPigeonRightOutsideFrame = createStaticPigeonFrame(mainFrame, 450, 'white')
+  const staticPigeonGrey1Frame = createStaticPigeonFrame(mainFrame, -450)
+  const staticPigeonGrey2Frame = createStaticPigeonFrame(mainFrame, -150)
+  const staticPigeonGrey3Frame = createStaticPigeonFrame(mainFrame, 150)
+  const staticPigeonWhiteFrame = createStaticPigeonFrame(mainFrame, 450, 'white')
   const fightingFrame = createFightingFrame(mainFrame)
   const ahhhhFrame = createAhhhhFrame(mainFrame)
   const errorFrames = Array.from({ length: 6 }, (_, index) => createErrorFrame(mainFrame, index))
-  const wavingBirdLeftOutsideFrame = createWavingBirdFrame(mainFrame)
-  const wavingBirdLeftMiddleFrame = createWavingBirdFrame(mainFrame)
-  const wavingBirdLeftInsideFrame = createWavingBirdFrame(mainFrame)
-  const wavingBirdCenterFrame = createWavingBirdFrame(mainFrame)
-  const wavingBirdRightInsideFrame = createWavingBirdFrame(mainFrame, 'white')
-  const wavingBirdRightMiddleFrame = createWavingBirdFrame(mainFrame, 'white')
-  const wavingBirdRightOutsideFrame = createWavingBirdFrame(mainFrame, 'white')
+  const wavingBirdBlack1Frame = createWavingBirdFrame(mainFrame)
+  const wavingBirdBlack2Frame = createWavingBirdFrame(mainFrame)
+  const wavingBirdBlack3Frame = createWavingBirdFrame(mainFrame)
+  const wavingBirdBlack4Frame = createWavingBirdFrame(mainFrame)
+  const wavingBirdWhite1Frame = createWavingBirdFrame(mainFrame, 'white')
+  const wavingBirdWhite2Frame = createWavingBirdFrame(mainFrame, 'white')
+  const wavingBirdWhite3Frame = createWavingBirdFrame(mainFrame, 'white')
   const hugeBlowingYukiFrame = createHugeBlowingYukiFrame(mainFrame)
+  const blackWhiteYuki1Frame = createBlackWhiteYukiFrame(mainFrame, 0)
+  const blackWhiteYuki2Frame = createBlackWhiteYukiFrame(mainFrame, 1 / 6)
+  const blackWhiteYuki3Frame = createBlackWhiteYukiFrame(mainFrame, 1 / 3)
+  const blackWhiteYuki4Frame = createBlackWhiteYukiFrame(mainFrame, 1 / 2)
+  const blackWhiteYuki5Frame = createBlackWhiteYukiFrame(mainFrame, 2 / 3)
+  const blackWhiteYuki6Frame = createBlackWhiteYukiFrame(mainFrame, 5 / 6)
+  const blackWhiteYuki7Frame = createBlackWhiteYukiFrame(mainFrame, 1)
 
   const whenReady = Promise.all(
     BrowserWindow.getAllWindows().map(frame => new Promise<void>(resolve => {
@@ -386,145 +410,145 @@ export function initializeWindows() {
   })
 
   emitter.once('walking-dog:keyframe-14', () => {
-    showWalkingDogFrame(walkingDogLeftOutsideFrame, -450)
-    showWalkingDogFrame(walkingDogRightOutsideFrame, 450)
+    showWalkingDogFrame(walkingDog1Frame, -450)
+    showWalkingDogFrame(walkingDog2Frame, 450)
   })
 
   emitter.once('walking-dog:keyframe-152', () => {
-    walkingDogLeftOutsideFrame.hide()
-    walkingDogRightOutsideFrame.hide()
+    walkingDog1Frame.hide()
+    walkingDog2Frame.hide()
   })
 
   emitter.once('walking-dog:keyframe-272', () => {
-    showWalkingDogFrame(walkingDogLeftOutsideFrame, -450)
-    showWalkingDogFrame(walkingDogLeftInsideFrame, -225)
-    showWalkingDogFrame(walkingDogLeftMiddleFrame, 0)
-    showWalkingDogFrame(walkingDogRightInsideFrame, 225)
-    showWalkingDogFrame(walkingDogRightOutsideFrame, 450)
+    showWalkingDogFrame(walkingDog1Frame, -450)
+    showWalkingDogFrame(walkingDog2Frame, -225)
+    showWalkingDogFrame(walkingDog3Frame, 0)
+    showWalkingDogFrame(walkingDog4Frame, 225)
+    showWalkingDogFrame(walkingDog5Frame, 450)
   })
 
   emitter.once('walking-dog:keyframe-309', () => {
-    walkingDogLeftOutsideFrame.hide()
-    walkingDogLeftInsideFrame.hide()
-    walkingDogLeftMiddleFrame.hide()
-    walkingDogRightInsideFrame.hide()
-    walkingDogRightOutsideFrame.hide()
+    walkingDog1Frame.hide()
+    walkingDog2Frame.hide()
+    walkingDog3Frame.hide()
+    walkingDog4Frame.hide()
+    walkingDog5Frame.hide()
   })
 
   emitter.once('walking-dog:keyframe-1228', () => {
-    showWalkingDogFrame(walkingDogLeftOutsideFrame, -450)
-    showWalkingDogFrame(walkingDogLeftInsideFrame, -225)
-    showWalkingDogFrame(walkingDogRightInsideFrame, 225)
-    showWalkingDogFrame(walkingDogRightOutsideFrame, 450)
+    showWalkingDogFrame(walkingDog1Frame, -450)
+    showWalkingDogFrame(walkingDog2Frame, -225)
+    showWalkingDogFrame(walkingDog3Frame, 225)
+    showWalkingDogFrame(walkingDog4Frame, 450)
   })
 
   emitter.once('walking-dog:keyframe-1371', () => {
-    walkingDogLeftInsideFrame.hide()
-    walkingDogRightInsideFrame.hide()
+    walkingDog2Frame.hide()
+    walkingDog3Frame.hide()
   })
 
   emitter.once('walking-dog:keyframe-1388', () => {
-    walkingDogLeftOutsideFrame.hide()
-    walkingDogRightOutsideFrame.hide()
+    walkingDog1Frame.hide()
+    walkingDog4Frame.hide()
   })
 
   emitter.once('walking-dog:keyframe-1491', () => {
-    showWalkingDogFrame(walkingDogLeftOutsideFrame, -450)
-    showWalkingDogFrame(walkingDogLeftInsideFrame, -225)
-    showWalkingDogFrame(walkingDogRightInsideFrame, 225)
-    showWalkingDogFrame(walkingDogRightOutsideFrame, 450)
+    showWalkingDogFrame(walkingDog1Frame, -450)
+    showWalkingDogFrame(walkingDog2Frame, -225)
+    showWalkingDogFrame(walkingDog3Frame, 225)
+    showWalkingDogFrame(walkingDog4Frame, 450)
   })
 
   emitter.once('walking-dog:keyframe-1527', () => {
-    walkingDogLeftOutsideFrame.hide()
-    walkingDogLeftInsideFrame.hide()
-    walkingDogRightInsideFrame.hide()
-    walkingDogRightOutsideFrame.hide()
+    walkingDog1Frame.hide()
+    walkingDog2Frame.hide()
+    walkingDog3Frame.hide()
+    walkingDog4Frame.hide()
   })
 
   emitter.once('walking-dog:keyframe-1874', () => {
-    showWalkingDogFrame(walkingDogLeftInsideFrame, -225)
-    showWalkingDogFrame(walkingDogRightInsideFrame, 225)
+    showWalkingDogFrame(walkingDog1Frame, -225)
+    showWalkingDogFrame(walkingDog2Frame, 225)
   })
 
   emitter.once('walking-dog:keyframe-1979', () => {
-    walkingDogLeftInsideFrame.hide()
-    walkingDogRightInsideFrame.hide()
+    walkingDog1Frame.hide()
+    walkingDog2Frame.hide()
   })
 
   emitter.once('walking-dog:keyframe-2151', () => {
-    showWalkingDogFrame(walkingDogLeftOutsideFrame, -450)
-    showWalkingDogFrame(walkingDogLeftMiddleFrame, -338)
-    showWalkingDogFrame(walkingDogLeftInsideFrame, -226)
-    showWalkingDogFrame(walkingDogRightInsideFrame, 222)
-    showWalkingDogFrame(walkingDogRightMiddleFrame, 334)
-    showWalkingDogFrame(walkingDogRightOutsideFrame, 446)
+    showWalkingDogFrame(walkingDog1Frame, -450)
+    showWalkingDogFrame(walkingDog2Frame, -338)
+    showWalkingDogFrame(walkingDog3Frame, -226)
+    showWalkingDogFrame(walkingDog4Frame, 222)
+    showWalkingDogFrame(walkingDog5Frame, 334)
+    showWalkingDogFrame(walkingDog6Frame, 446)
   })
 
   emitter.once('walking-dog:keyframe-2217', () => {
-    showWalkingDogFrame(walkingDogLeftOutsideFrame, -562)
-    showWalkingDogFrame(walkingDogRightOutsideFrame, 558)
+    showWalkingDogFrame(walkingDog1Frame, -562)
+    showWalkingDogFrame(walkingDog6Frame, 558)
   })
 
   emitter.once('walking-dog:keyframe-2284', () => {
-    walkingDogLeftOutsideFrame.hide()
-    walkingDogLeftMiddleFrame.hide()
-    walkingDogLeftInsideFrame.hide()
-    walkingDogRightInsideFrame.hide()
-    walkingDogRightMiddleFrame.hide()
-    walkingDogRightOutsideFrame.hide()
+    walkingDog1Frame.hide()
+    walkingDog2Frame.hide()
+    walkingDog3Frame.hide()
+    walkingDog4Frame.hide()
+    walkingDog5Frame.hide()
+    walkingDog6Frame.hide()
   })
 
   emitter.once('rolling-dog:keyframe-172', () => {
-    rollingDogRightOutsideFrame.show()
+    rollingDog1Frame.show()
   })
 
   emitter.once('rolling-dog:keyframe-811', () => {
-    rollingDogRightOutsideFrame.show()
+    rollingDog1Frame.show()
   })
 
   emitter.once('rolling-dog:keyframe-990', () => {
-    rollingDogRightOutsideFrame.show()
+    rollingDog1Frame.show()
   })
 
   emitter.once('rolling-dog:keyframe-1391', () => {
-    rollingDogRightOutsideFrame.show()
+    rollingDog1Frame.show()
   })
 
   emitter.once('rolling-dog:keyframe-1395', () => {
-    rollingDogRightInsideFrame.show()
+    rollingDog2Frame.show()
   })
 
   emitter.once('rolling-dog:keyframe-1989', () => {
-    rollingDogRightOutsideFrame.show()
+    rollingDog1Frame.show()
   })
 
   emitter.once('rolling-dog:keyframe-1993', () => {
-    rollingDogRightInsideFrame.show()
+    rollingDog2Frame.show()
   })
 
   emitter.once('rolling-dog:keyframe-1997', () => {
-    rollingDogLeftInsideFrame.show()
+    rollingDog3Frame.show()
   })
 
   emitter.once('rolling-dog:keyframe-2305', () => {
-    rollingDogRightOutsideFrame.show()
+    rollingDog1Frame.show()
   })
 
   emitter.once('rolling-dog:keyframe-2309', () => {
-    rollingDogRightInsideFrame.show()
+    rollingDog2Frame.show()
   })
 
   emitter.once('rolling-dog:keyframe-2313', () => {
-    rollingDogLeftInsideFrame.show()
+    rollingDog3Frame.show()
   })
 
   emitter.once('rolling-dog:keyframe-2317', () => {
-    rollingDogLeftOutsideFrame.show()
+    rollingDog4Frame.show()
   })
 
   emitter.once('rolling-dog:keyframe-2405', () => {
-    rollingDogRightOutsideFrame.show()
+    rollingDog1Frame.show()
   })
 
   emitter.once('clapping-yuki-peeking-pigeon:keyframe-69', () => {
@@ -578,51 +602,51 @@ export function initializeWindows() {
   })
 
   emitter.once('static-yuki:keyframe-234', () => {
-    staticYukiLeftFrame.show()
+    staticYuki1Frame.show()
   })
 
   emitter.once('static-yuki:keyframe-244', () => {
-    staticYukiCenterFrame.show()
+    staticYuki2Frame.show()
   })
 
   emitter.once('static-yuki:keyframe-254', () => {
-    staticYukiRightFrame.show()
+    staticYuki3Frame.show()
   })
 
   emitter.once('static-yuki:keyframe-1452', () => {
-    staticYukiLeftFrame.show()
+    staticYuki1Frame.show()
   })
 
   emitter.once('static-yuki:keyframe-1462', () => {
-    staticYukiCenterFrame.show()
+    staticYuki2Frame.show()
   })
 
   emitter.once('static-yuki:keyframe-1472', () => {
-    staticYukiRightFrame.show()
+    staticYuki3Frame.show()
   })
 
   emitter.once('static-yuki:keyframe-2061', () => {
-    staticYukiLeftFrame.show()
+    staticYuki1Frame.show()
   })
 
   emitter.once('static-yuki:keyframe-2071', () => {
-    staticYukiCenterFrame.show()
+    staticYuki2Frame.show()
   })
 
   emitter.once('static-yuki:keyframe-2081', () => {
-    staticYukiRightFrame.show()
+    staticYuki3Frame.show()
   })
 
   emitter.once('static-yuki:keyframe-2368', () => {
-    staticYukiLeftFrame.show()
+    staticYuki1Frame.show()
   })
 
   emitter.once('static-yuki:keyframe-2378', () => {
-    staticYukiCenterFrame.show()
+    staticYuki2Frame.show()
   })
 
   emitter.once('static-yuki:keyframe-2388', () => {
-    staticYukiRightFrame.show()
+    staticYuki3Frame.show()
   })
 
   emitter.once('black-bird-white-bird:keyframe-315', () => {
@@ -635,19 +659,19 @@ export function initializeWindows() {
   })
 
   emitter.once('static-pigeon:keyframe-1149', () => {
-    staticPigeonLeftOutsideFrame.show()
+    staticPigeonGrey1Frame.show()
   })
 
   emitter.once('static-pigeon:keyframe-1158', () => {
-    staticPigeonLeftInsideFrame.show()
+    staticPigeonGrey2Frame.show()
   })
 
   emitter.once('static-pigeon:keyframe-1167', () => {
-    staticPigeonRightInsideFrame.show()
+    staticPigeonGrey3Frame.show()
   })
 
   emitter.once('static-pigeon:keyframe-1176', () => {
-    staticPigeonRightOutsideFrame.show()
+    staticPigeonWhiteFrame.show()
   })
 
   emitter.once('fighting:keyframe-1184', () => {
@@ -659,34 +683,73 @@ export function initializeWindows() {
   })
 
   emitter.once('waving-bird:keyframe-1685', () => {
-    showWavingBirdFrame(wavingBirdLeftOutsideFrame, -480)
-    showWavingBirdFrame(wavingBirdLeftMiddleFrame, -320)
-    showWavingBirdFrame(wavingBirdLeftInsideFrame, -160)
-    showWavingBirdFrame(wavingBirdRightInsideFrame, 160)
-    showWavingBirdFrame(wavingBirdRightMiddleFrame, 320)
-    showWavingBirdFrame(wavingBirdRightOutsideFrame, 480)
+    showWavingBirdFrame(wavingBirdBlack1Frame, -480)
+    showWavingBirdFrame(wavingBirdBlack2Frame, -320)
+    showWavingBirdFrame(wavingBirdBlack3Frame, -160)
+    showWavingBirdFrame(wavingBirdWhite1Frame, 160)
+    showWavingBirdFrame(wavingBirdWhite2Frame, 320)
+    showWavingBirdFrame(wavingBirdWhite3Frame, 480)
   })
 
   emitter.once('waving-bird:keyframe-2099', () => {
-    showWavingBirdFrame(wavingBirdRightInsideFrame, -300)
-    showWavingBirdFrame(wavingBirdLeftOutsideFrame, -100)
-    showWavingBirdFrame(wavingBirdRightOutsideFrame, 100)
-    showWavingBirdFrame(wavingBirdLeftInsideFrame, 300)
+    showWavingBirdFrame(wavingBirdWhite1Frame, -300)
+    showWavingBirdFrame(wavingBirdBlack1Frame, -100)
+    showWavingBirdFrame(wavingBirdWhite2Frame, 100)
+    showWavingBirdFrame(wavingBirdBlack2Frame, 300)
   })
 
   emitter.once('waving-bird:keyframe-2439', () => {
-    showWavingBirdFrame(wavingBirdLeftOutsideFrame, -360)
-    showWavingBirdFrame(wavingBirdRightInsideFrame, -240)
-    showWavingBirdFrame(wavingBirdLeftMiddleFrame, -120)
-    showWavingBirdFrame(wavingBirdRightMiddleFrame, 0)
-    showWavingBirdFrame(wavingBirdCenterFrame, 120)
-    showWavingBirdFrame(wavingBirdRightOutsideFrame, 240)
-    showWavingBirdFrame(wavingBirdLeftInsideFrame, 360)
+    showWavingBirdFrame(wavingBirdBlack1Frame, -360)
+    showWavingBirdFrame(wavingBirdWhite1Frame, -240)
+    showWavingBirdFrame(wavingBirdBlack2Frame, -120)
+    showWavingBirdFrame(wavingBirdWhite2Frame, 0)
+    showWavingBirdFrame(wavingBirdBlack3Frame, 120)
+    showWavingBirdFrame(wavingBirdWhite3Frame, 240)
+    showWavingBirdFrame(wavingBirdBlack4Frame, 360)
   })
 
   emitter.once('huge-blowing-yuki:keyframe-1808', () => {
     hugeBlowingYukiFrame.show()
   })
+
+  emitter.once('black-white-yuki:keyframe-1833', () => {
+    blackWhiteYuki1Frame.show()
+  })
+
+  emitter.once('black-white-yuki:keyframe-1840', () => {
+    blackWhiteYuki2Frame.show()
+  })
+
+  emitter.once('black-white-yuki:keyframe-1844', () => {
+    blackWhiteYuki3Frame.show()
+  })
+
+  emitter.once('black-white-yuki:keyframe-1848', () => {
+    blackWhiteYuki4Frame.show()
+  })
+
+  emitter.once('black-white-yuki:keyframe-1852', () => {
+    blackWhiteYuki5Frame.show()
+  })
+
+  emitter.once('black-white-yuki:keyframe-1858', () => {
+    blackWhiteYuki6Frame.show()
+  })
+
+  emitter.once('black-white-yuki:keyframe-1862', () => {
+    blackWhiteYuki7Frame.show()
+  })
+
+  emitter.once('black-white-yuki:keyframe-1873', () => {
+    blackWhiteYuki1Frame.hide()
+    blackWhiteYuki2Frame.hide()
+    blackWhiteYuki3Frame.hide()
+    blackWhiteYuki4Frame.hide()
+    blackWhiteYuki5Frame.hide()
+    blackWhiteYuki6Frame.hide()
+    blackWhiteYuki7Frame.hide()
+  })
+
 
   const sleep = (timeout: number) => new Promise(resolve => setTimeout(resolve, timeout))
 
@@ -867,6 +930,24 @@ export function initializeWindows() {
     // Huge blowing Yuki
     if (frame >= 1808) {
       emitter.emit('huge-blowing-yuki:keyframe-1808')
+    }
+    // Black white yuki
+    if (frame >= 1873) {
+      emitter.emit('black-white-yuki:keyframe-1873')
+    } else if (frame >= 1862) {
+      emitter.emit('black-white-yuki:keyframe-1862')
+    } else if (frame >= 1858) {
+      emitter.emit('black-white-yuki:keyframe-1858')
+    } else if (frame >= 1852) {
+      emitter.emit('black-white-yuki:keyframe-1852')
+    } else if (frame >= 1848) {
+      emitter.emit('black-white-yuki:keyframe-1848')
+    } else if (frame >= 1844) {
+      emitter.emit('black-white-yuki:keyframe-1844')
+    } else if (frame >= 1840) {
+      emitter.emit('black-white-yuki:keyframe-1840')
+    } else if (frame >= 1833) {
+      emitter.emit('black-white-yuki:keyframe-1833')
     }
     broadcast('play', frame, frameInterval)
   })
