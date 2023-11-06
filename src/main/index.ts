@@ -38,7 +38,10 @@ function handleMessages() {
 
 async function initialize() {
   await app.whenReady()
-  initializeWindows()
+  const dispose = initializeWindows()
+  app.on('before-quit', () => {
+    dispose()
+  })
 }
 
 handleMessages()

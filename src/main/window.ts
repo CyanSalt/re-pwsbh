@@ -1092,4 +1092,8 @@ export function initializeWindows() {
     }
     broadcast('play', frame, frameInterval)
   })
+
+  return () => {
+    emitter.removeAllListeners()
+  }
 }
