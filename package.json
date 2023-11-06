@@ -1,6 +1,6 @@
 {
   "name": "re-pwsbh",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "productName": "PowerfulWindSlickedBackHair",
   "description": "Cross-platform remaster of PowerfulWindSlickedBackHair",
   "main": "dist/main/index.js",
