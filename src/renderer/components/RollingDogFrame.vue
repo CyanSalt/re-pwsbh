@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { watchEffect } from 'vue'
-import cross from '../assets/cross.png'
 import dogWalk1 from '../assets/dog-walk-1.png'
 import dogWalk2 from '../assets/dog-walk-2.png'
 import rollingDog from '../assets/rolling-dog.png'
@@ -42,7 +41,6 @@ worldBridge.keyframes.once('keyframe-from-172', () => {
 worldBridge.keyframes.once('keyframe-811', () => {
   new Notification('风力实在是太强了！', {
     body: '我整条狗都快被吹飞了！',
-    icon: cross,
   })
 })
 
@@ -53,7 +51,6 @@ worldBridge.keyframes.once('keyframe-from-811', () => {
 worldBridge.keyframes.once('keyframe-990', () => {
   new Notification('风力实在是太强了！', {
     body: '我整条狗都快被吹飞了！',
-    icon: cross,
   })
 })
 
@@ -100,7 +97,6 @@ worldBridge.keyframes.once('keyframe-from-2317', () => {
 worldBridge.keyframes.once('keyframe-2405', () => {
   new Notification('风力实在是太强了！', {
     body: '我整条狗都快被吹飞了！',
-    icon: cross,
   })
 })
 
@@ -205,7 +201,6 @@ worldBridge.onPlay(frame => {
     <img :src="dogWalk1" class="offscreen-image">
     <img :src="dogWalk2" class="offscreen-image">
     <img :src="rollingDog" class="offscreen-image">
-    <img :src="cross" class="offscreen-image">
   </div>
 </template>
 
