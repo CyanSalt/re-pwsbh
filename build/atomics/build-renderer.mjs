@@ -1,10 +1,6 @@
-import { builtinModules } from 'node:module'
 import vue from '@vitejs/plugin-vue'
 import reactivityTransform from '@vue-macros/reactivity-transform/vite'
 import * as vite from 'vite'
-import { requireCommonJS } from '../utils/common.mjs'
-
-const pkg = requireCommonJS(import.meta, '../../package.json')
 
 /**
  * @typedef {import('vite').InlineConfig} InlineConfig
@@ -36,24 +32,5 @@ export default (versions) => vite.build({
     target: `chrome${versions.chrome.split('.')[0]}`,
     assetsDir: '.',
     minify: false,
-    rollupOptions: {
-      external: [
-        /^node:/,
-        'electron',
-        ...builtinModules,
-        ...Object.keys(pkg.dependencies ?? {}),
-      ],
-      output: {
-        format: 'cjs',
-        exports: 'named',
-        freeze: false,
-      },
-    },
-    commonjsOptions: {
-      ignore: [
-        'electron',
-        ...builtinModules,
-      ],
-    },
   },
 })
