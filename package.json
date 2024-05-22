@@ -31,8 +31,8 @@
     "node": ">=14.0.0"
   },
   "devDependencies": {
-    "@cyansalt/eslint-config": "^4.0.0",
-    "@cyansalt/stylelint-config": "^4.0.2",
+    "@cyansalt/eslint-config": "^4.0.2",
+    "@cyansalt/stylelint-config": "^4.0.3",
     "@cyansalt/tsconfig": "^2.2.1",
     "@electron/rebuild": "^3.3.0",
     "@release-it/conventional-changelog": "^7.0.2",
@@ -43,9 +43,11 @@
     "electron": "^27.0.2",
     "electron-packager": "^17.1.2",
     "esbuild": "^0.19.5",
+    "eslint": "^9.3.0",
     "png2icons": "^2.0.1",
     "release-it": "^16.2.1",
     "sass": "^1.69.5",
+    "stylelint": "^16.5.0",
     "typescript": "^5.2.2",
     "vite": "^4.5.0",
     "vue": "^3.3.7"
