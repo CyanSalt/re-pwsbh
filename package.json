@@ -33,7 +33,7 @@
   "devDependencies": {
     "@cyansalt/eslint-config": "^4.1.0",
     "@cyansalt/stylelint-config": "^4.0.5",
-    "@cyansalt/tsconfig": "^2.2.1",
+    "@cyansalt/tsconfig": "^3.0.0",
     "@electron/packager": "^18.3.3",
     "@electron/rebuild": "^3.6.0",
     "@release-it/conventional-changelog": "^8.0.1",

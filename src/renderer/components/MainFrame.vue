@@ -414,7 +414,6 @@ worldBridge.onPlay(frame => {
   padding: 6px;
   color: #ffffff;
   font-family: 'Text';
-  font-style: bold;
   font-size: v-bind('fontSizeStyle');
   white-space: pre;
   text-align: v-bind('textAlign');
