@@ -1,5 +1,7 @@
 # 強風オールバック
 
+<img src="https://cdn.jsdelivr.net/gh/CyanSalt/re-pwsbh@main/resources/images/icon.png" width="96">
+
 A cross-platform remake of [PowerfulWindSlickedBackHair_Winform](https://github.com/CS-LX/PowerfulWindSlickedBackHair_Winform), using [Electron](https://www.electronjs.org/).
 
 The original version was created by [钅离_LX](https://github.com/CS-LX). This project uses [code](https://github.com/SunnyDesignor/PowerfulWindSlickedBackHairCS-LX_Improve) derived from a decompilation of [SunnyDesigner](https://github.com/SunnyDesignor).
